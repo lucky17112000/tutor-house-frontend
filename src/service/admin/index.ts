@@ -95,3 +95,31 @@ export const createCategory = async (value: any) => {
     return { error: "Could not connect to backend." };
   }
 };
+
+//get category list-> http://localhost:4000/api/categories
+export const getCategories = async () => {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("better-auth.session_token")?.value;
+    console.log("Session token in getCategories:", token);
+    if (!token) {
+      return { error: "No session token found. Please login first." };
+    }
+    const response = await fetch(`${AUTH_URL}/api/categories`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+    });
+    if (response.status === 401) {
+      return { error: "Unauthorized. You do not have admin access." };
+    }
+    const data = await response.json();
+    console.log("getCategories response:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return { error: "Could not connect to backend." };
+  }
+};

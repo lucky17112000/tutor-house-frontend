@@ -8,6 +8,17 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
   const res = await getSingleTutor(id);
 
+  // Parse availability JSON safely
+  let availability: Record<string, string[]> = {};
+  try {
+    const raw = res?.result?.availability;
+    if (raw) {
+      availability = typeof raw === "string" ? JSON.parse(raw) : raw;
+    }
+  } catch {
+    availability = {};
+  }
+
   // Simple hover card design with Tailwind
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
@@ -41,14 +52,36 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {/* Info Section */}
           <div className="space-y-3 text-sm">
-            <p className="flex justify-between items-center">
-              <span className="font-medium text-gray-400 uppercase tracking-wide text-xs">
-                Availability
-              </span>
-              <span className="font-semibold text-gray-800">
-                {res?.result?.availability}
-              </span>
-            </p>
+            {/* Availability */}
+            {Object.keys(availability).length > 0 && (
+              <div>
+                <span className="font-medium text-gray-400 uppercase tracking-wide text-xs block mb-2">
+                  Availability
+                </span>
+                <div className="flex flex-col gap-1.5">
+                  {Object.entries(availability).map(([day, slots]) => (
+                    <div
+                      key={day}
+                      className="flex items-center justify-between bg-indigo-50 rounded-lg px-3 py-2"
+                    >
+                      <span className="capitalize font-semibold text-indigo-700 text-xs w-24">
+                        {day}
+                      </span>
+                      <div className="flex flex-wrap gap-1 justify-end">
+                        {slots.map((slot, i) => (
+                          <span
+                            key={i}
+                            className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-0.5 rounded-full"
+                          >
+                            {slot}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <p className="flex justify-between items-center">
               <span className="font-medium text-gray-400 uppercase tracking-wide text-xs">

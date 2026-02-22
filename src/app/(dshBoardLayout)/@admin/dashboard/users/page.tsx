@@ -1,9 +1,11 @@
 import { getAllUsers } from "@/service/admin";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const UserFind = async () => {
   const result = await getAllUsers();
-  console.log(result.data[0].name);
+  console.log(result?.data?.[0]?.name);
 
   if (result?.error) {
     return (

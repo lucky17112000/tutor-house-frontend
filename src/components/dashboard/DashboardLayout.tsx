@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { ChevronDown, ChevronRight } from "lucide-react";
 // import { authClient } from "@/lib/auth-client";
 import { createAuthClient } from "better-auth/client";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
   user?: any;
+  categories?: { id: string; name: string }[];
 }
 
 const authClient = createAuthClient({
@@ -20,13 +22,52 @@ const authClient = createAuthClient({
 export default function DashboardLayout({
   children,
   user,
+  categories = [],
 }: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   console.log("User in DashboardLayout:", user?.role);
+
+  // Icon map for known category names
+  const ICON_MAP: Record<string, string> = {
+    math: "➕",
+    physics: "⚛️",
+    chemistry: "🧪",
+    bangla: "অ",
+    english: "🔤",
+    biology: "🧬",
+    ict: "💻",
+    programming: "👨‍💻",
+  };
+
+  // Fallback static categories if API returns nothing
+  const FALLBACK_CATEGORIES = [
+    { id: "math", name: "Math" },
+    { id: "physics", name: "Physics" },
+    { id: "chemistry", name: "Chemistry" },
+    { id: "bangla", name: "Bangla" },
+    { id: "english", name: "English" },
+    { id: "biology", name: "Biology" },
+    { id: "ict", name: "ICT" },
+  ];
+
+  const resolvedCategories =
+    categories.length > 0 ? categories : FALLBACK_CATEGORIES;
+
+  const CATEGORY_ITEMS = resolvedCategories.map((cat) => ({
+    id: cat.id,
+    name: cat.name,
+    icon: ICON_MAP[cat.name.toLowerCase()] ?? "📖",
+  }));
 
   const TUTOR_ITEMS = [
     { name: "Dashboard", href: "/dashboard", icon: "📊" },
-    { name: "Create Course", href: "/dashboard/create", icon: "📚" },
+    {
+      name: "Create Course",
+      href: "/dashboard/create",
+      icon: "📚",
+      children: CATEGORY_ITEMS,
+    },
   ];
   const STUDENT_ITEMS = [
     { name: "Dashboard", href: "/dashboard", icon: "📊" },
@@ -35,7 +76,7 @@ export default function DashboardLayout({
   const ADMIN_ITEMS = [
     { name: "Dashboard", href: "/dashboard", icon: "📊" },
     { name: "Manage Users", href: "/dashboard/users", icon: "👥" },
-    { name: "Manage Courses", href: "/dashboard/course", icon: "📚" },
+    { name: "Manage Tutor", href: "/dashboard/course", icon: "📚" },
     { name: "Manage Categories", href: "/dashboard/category", icon: "📂" },
   ];
 
@@ -83,17 +124,61 @@ export default function DashboardLayout({
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto py-4">
           <ul className="space-y-1 px-3">
-            {navItems.map((item) => (
+            {navItems.map((item: any) => (
               <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <span className="text-xl">{item.icon}</span>
-                  {isSidebarOpen && (
-                    <span className="font-medium">{item.name}</span>
-                  )}
-                </Link>
+                {item.children ? (
+                  <div>
+                    <button
+                      onClick={() =>
+                        setOpenDropdown(
+                          openDropdown === item.name ? null : item.name,
+                        )
+                      }
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      {isSidebarOpen && (
+                        <>
+                          <span className="font-medium flex-1 text-left">
+                            {item.name}
+                          </span>
+                          {openDropdown === item.name ? (
+                            <ChevronDown className="size-4 opacity-50" />
+                          ) : (
+                            <ChevronRight className="size-4 opacity-50" />
+                          )}
+                        </>
+                      )}
+                    </button>
+                    {openDropdown === item.name && isSidebarOpen && (
+                      <ul className="mt-1 ml-4 space-y-1">
+                        {item.children.map(
+                          (cat: { id: string; name: string; icon: string }) => (
+                            <li key={cat.name}>
+                              <Link
+                                href={`${item.href}?categoryId=${cat.id}`}
+                                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 transition-colors"
+                              >
+                                <span>{cat.icon}</span>
+                                <span>{cat.name}</span>
+                              </Link>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <span className="text-xl">{item.icon}</span>
+                    {isSidebarOpen && (
+                      <span className="font-medium">{item.name}</span>
+                    )}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
