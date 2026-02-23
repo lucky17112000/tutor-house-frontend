@@ -1,6 +1,7 @@
 // "use client";
 import { Button } from "@/components/ui/button";
 import { getSingleTutor } from "@/service/tutor/user.services";
+import Link from "next/link";
 import React from "react";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -121,9 +122,12 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           {/* Button */}
-          <button className="mt-6 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-lg font-semibold tracking-wide hover:opacity-90 active:scale-95 transition-all duration-200">
+          <Link
+            href={`/dashboard/createBook/${id}`}
+            className="mt-6 w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2.5 rounded-lg font-semibold tracking-wide hover:opacity-90 active:scale-95 transition-all duration-200"
+          >
             Book Now
-          </button>
+          </Link>
         </div>
       </div>
     </div>

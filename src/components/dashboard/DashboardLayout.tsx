@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Home, LogOut, Mail } from "lucide-react";
 // import { authClient } from "@/lib/auth-client";
 import { createAuthClient } from "better-auth/client";
+import { Button } from "../ui/button";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -61,7 +62,7 @@ export default function DashboardLayout({
   }));
 
   const TUTOR_ITEMS = [
-    { name: "Dashboard", href: "/dashboard", icon: "📊" },
+    { name: "Home", href: "/", icon: "📊" },
     {
       name: "Create Course",
       href: "/dashboard/create",
@@ -70,11 +71,11 @@ export default function DashboardLayout({
     },
   ];
   const STUDENT_ITEMS = [
-    { name: "Dashboard", href: "/dashboard", icon: "📊" },
+    { name: "Home", href: "/", icon: "📊" },
     { name: "Create Booking", href: "/dashboard/createBook", icon: "📚" },
   ];
   const ADMIN_ITEMS = [
-    { name: "Dashboard", href: "/dashboard", icon: "📊" },
+    { name: "Home", href: "/", icon: "📊" },
     { name: "Manage Users", href: "/dashboard/users", icon: "👥" },
     { name: "Manage Tutor", href: "/dashboard/course", icon: "📚" },
     { name: "Manage Categories", href: "/dashboard/category", icon: "📂" },
@@ -92,10 +93,7 @@ export default function DashboardLayout({
     navItems = ADMIN_ITEMS;
   } else {
     // Default items if no role
-    navItems = [
-      { name: "Dashboard", href: "/dashboard", icon: "📊" },
-      { name: "Courses", href: "/dashboard/courses", icon: "📚" },
-    ];
+    navItems = [{ name: "Home", href: "/", icon: "📊" }];
   }
 
   return (
@@ -184,43 +182,77 @@ export default function DashboardLayout({
           </ul>
         </nav>
 
-        {/* User Section */}
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+        {/* Sidebar Footer */}
+        <div className="mt-auto flex flex-col gap-2 p-3 border-t border-gray-200 dark:border-gray-700">
+          {/* User Info Card */}
           {user ? (
-            // User logged in
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+            <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-linear-to-r from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950">
+              <div className="w-10 h-10 shrink-0 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow">
                 {user.name?.charAt(0).toUpperCase() || "U"}
               </div>
               {isSidebarOpen && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
+                  <p className="text-sm font-semibold text-gray-800 dark:text-white truncate">
                     {user.name || "User Account"}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  <p className="flex items-center gap-1 text-xs text-indigo-500 dark:text-indigo-400 truncate">
+                    <Mail className="size-3 shrink-0" />
                     {user.email || "user@example.com"}
                   </p>
                 </div>
               )}
             </div>
           ) : (
-            // No user
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white font-semibold">
+            <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-gray-50 dark:bg-gray-800">
+              <div className="w-10 h-10 shrink-0 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-white font-bold text-sm">
                 ?
               </div>
               {isSidebarOpen && (
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     Guest
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                    Please login
-                  </p>
+                  <p className="text-xs text-gray-400">Please login</p>
                 </div>
               )}
             </div>
           )}
+
+          {/* Back to Home */}
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className={`gap-2 border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 dark:border-indigo-800 dark:text-indigo-400 dark:hover:bg-indigo-950 transition-all ${
+              isSidebarOpen ? "w-full justify-start" : "w-full justify-center"
+            }`}
+          >
+            <Link href="/">
+              <Home className="size-4 shrink-0" />
+              {isSidebarOpen && <span>Back to Home</span>}
+            </Link>
+          </Button>
+
+          {/* Logout */}
+          <Button
+            variant="destructive"
+            size="sm"
+            className={`gap-2 transition-all ${
+              isSidebarOpen ? "w-full justify-start" : "w-full justify-center"
+            }`}
+            onClick={() => {
+              const authClientInstance = createAuthClient({
+                baseURL: "http://localhost:4000",
+                fetchOptions: { credentials: "include" },
+              });
+              authClientInstance
+                .signOut()
+                .then(() => (window.location.href = "/"));
+            }}
+          >
+            <LogOut className="size-4 shrink-0" />
+            {isSidebarOpen && <span>Logout</span>}
+          </Button>
         </div>
       </aside>
 

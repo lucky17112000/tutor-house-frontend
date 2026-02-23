@@ -61,10 +61,10 @@ interface Navbar1Props {
 
 const Navbar1 = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    url: "/",
+    src: "",
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "Tutor House",
   },
   menu = [
     { title: "Home", url: "/" },
@@ -108,6 +108,10 @@ const Navbar1 = ({
       title: "About Us",
       url: "/about",
     },
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+    },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -122,7 +126,7 @@ const Navbar1 = ({
         className,
       )}
     >
-      <div className="container">
+      <div className="container mx-auto px-6 lg:px-10">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-8">

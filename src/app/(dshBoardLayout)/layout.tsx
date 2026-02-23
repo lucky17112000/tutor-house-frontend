@@ -25,7 +25,7 @@ const layout = ({
   // console.log("Session in LoginForm:", session.data?.user);
   // console.log("User Role from session:", (session.data?.user as any)?.role);
   // const result = await getCategories();
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>(null);
   // const [error, setError] = useState(null);
   const res = data?.[0];
   console.log(res);
