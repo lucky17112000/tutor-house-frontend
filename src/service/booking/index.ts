@@ -7,10 +7,18 @@ import { cookies } from "next/headers";
 
 const API_URL = process.env.API_URL ?? "http://localhost:4000";
 
+// Helper: get session token (works in both dev and production)
+function getSessionToken(cookieStore: Awaited<ReturnType<typeof cookies>>) {
+  return (
+    cookieStore.get("better-auth.session_token")?.value ??
+    cookieStore.get("__Secure-better-auth.session_token")?.value
+  );
+}
+
 export const createBooking = async (bookingData: BookingPayload) => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("better-auth.session_token")?.value;
+    const token = getSessionToken(cookieStore);
     console.log("🔑 Session token in createBooking:", token);
 
     if (!token) {
@@ -59,7 +67,7 @@ export const createBooking = async (bookingData: BookingPayload) => {
 export const getStudentBookings = async () => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("better-auth.session_token")?.value;
+    const token = getSessionToken(cookieStore);
 
     if (!token) {
       return { error: "No session token found. Please login first." };
@@ -86,7 +94,7 @@ export const getStudentBookings = async () => {
 export const cancelBooking = async (bookingId: string) => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("better-auth.session_token")?.value;
+    const token = getSessionToken(cookieStore);
     if (!token) {
       return { error: "No session token found. Please login first." };
     }
@@ -115,7 +123,7 @@ export const cancelBooking = async (bookingId: string) => {
 export const completeBooking = async (bookingId: string) => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("better-auth.session_token")?.value;
+    const token = getSessionToken(cookieStore);
     if (!token) {
       return { error: "No session token found. Please login first." };
     }

@@ -233,7 +233,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       I am a...
                     </FieldLabel>
                     <div className="grid grid-cols-3 gap-2 mt-0.5">
-                      {["Student", "Tutor", "Admin"].map((r) => (
+                      {["Student", "Tutor"].map((r) => (
                         <button
                           key={r}
                           type="button"

@@ -1,8 +1,4 @@
 // ========================================================
-// টিউটর বুকিং পেজ — সার্ভার কম্পোনেন্ট
-// এই পেজে URL থেকে টিউটরের ID নিয়ে সার্ভার থেকে ডেটা
-// ফেচ করা হয় এবং সেই ডেটা দিয়ে BookingCard রেন্ডার করা হয়
-// ========================================================
 
 import { getSingleTutor } from "@/service/tutor/user.services";
 import BookingCard from "@/components/booking/BookingCard";

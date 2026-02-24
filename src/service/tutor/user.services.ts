@@ -7,6 +7,14 @@ const API_URL = process.env.API_URL ?? "http://localhost:4000/";
 
 const MY_URL = env.AUTH_URL ?? "http://localhost:4000";
 
+// Helper: get session token (works in both dev and production)
+function getSessionToken(cookieStore: Awaited<ReturnType<typeof cookies>>) {
+  return (
+    cookieStore.get("better-auth.session_token")?.value ??
+    cookieStore.get("__Secure-better-auth.session_token")?.value
+  );
+}
+
 export const getAllTutors = async (page: number = 1, limit: number = 5) => {
   try {
     const response = await fetch(
@@ -106,7 +114,7 @@ export const getSingleTutor = async (id: string) => {
 export const createTutor = async (tutorData: any) => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("better-auth.session_token")?.value;
+    const token = getSessionToken(cookieStore);
     console.log("Session token in createTutor:", token);
     if (!token) {
       return { error: "No session token found. Please login first." };
@@ -143,7 +151,7 @@ export const createTutor = async (tutorData: any) => {
 export const getTutorBookings = async () => {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("better-auth.session_token")?.value;
+    const token = getSessionToken(cookieStore);
     if (!token) {
       return { error: "No session token found. Please login first." };
     }

@@ -22,7 +22,7 @@ interface DashboardLayoutProps {
 }
 
 const authClient = createAuthClient({
-  baseURL: "http://localhost:4000",
+  baseURL: typeof window !== "undefined" ? window.location.origin : "",
   fetchOptions: {
     credentials: "include",
   },
@@ -105,6 +105,7 @@ export default function DashboardLayout({
     { name: "Manage Users", href: "/dashboard/users", icon: "👥" },
     { name: "Manage Tutor", href: "/dashboard/course", icon: "📚" },
     { name: "Manage Categories", href: "/dashboard/category", icon: "📂" },
+    { name: "Manage Booking", href: "/dashboard/booking", icon: "📚" },
   ];
 
   // ✅ Conditionally set navItems based on user role
@@ -271,7 +272,6 @@ export default function DashboardLayout({
                 fetchOptions: {
                   onSuccess: () => {
                     window.location.href = "/login";
-                    
                   },
                 },
               });

@@ -5,7 +5,7 @@
 "use server";
 
 import { authClient } from "@/lib/auth-client";
-import { getCategories } from "@/service/admin";
+import { getCategories, adminCancelBooking } from "@/service/admin";
 import { cancelBooking, completeBooking } from "@/service/booking";
 
 export const getc = async () => {
@@ -21,4 +21,8 @@ export const completeSt = async (id: string) => {
 };
 export const signO = async () => {
   await authClient.signOut();
+};
+
+export const adminCancelSt = async () => {
+  return await adminCancelBooking();
 };

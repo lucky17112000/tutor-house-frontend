@@ -40,7 +40,7 @@ export function LoginForm({
   const handleGoogleLogIn = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000/dashboard", // login success hole frontend er home page e redirect hobe
+      callbackURL: "https://assingment-4-frontend.vercel.app/dashboard",
     });
   };
 
