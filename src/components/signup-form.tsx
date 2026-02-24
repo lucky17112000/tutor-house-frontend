@@ -53,7 +53,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       try {
         const { data, error } = await authClient.signUp.email(value);
         toast.success("Account created successfully!", { id: toastId });
-        router.push("/login");
+        router.push("/dashboard");
       } catch (error) {
         console.error("Signup error:", error);
         toast.error("Failed to create account. Please try again later.", {

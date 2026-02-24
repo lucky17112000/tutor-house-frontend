@@ -1,6 +1,7 @@
 "use client";
 
 import { createTutor } from "@/service/tutor/user.services";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +18,7 @@ const DAYS = [
 type Availability = Record<string, string[]>;
 
 export default function TutorCreateForm({ id }: { id: string }) {
+  const router = useRouter();
   // console.log("recived: ", id);
   const [availability, setAvailability] = useState<Availability>({});
   const [slotInputs, setSlotInputs] = useState<Record<string, string>>({});
@@ -78,6 +80,10 @@ export default function TutorCreateForm({ id }: { id: string }) {
           {JSON.stringify(availability, null, 2)}
         </pre>
       ),
+      action: {
+        label: "Go to Dashboard",
+        onClick: () => router.push("/dashboard/booking"),
+      },
     });
 
     // TODO: call your createTutor service here

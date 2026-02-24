@@ -82,7 +82,7 @@ export function BugReportForm() {
   });
 
   return (
-    <Card className="w-full sm:max-w-md">
+    <Card className="w-full flex mx-auto sm:max-w-md">
       <CardHeader>
         <CardTitle>Tutor Category</CardTitle>
         <CardDescription>Create a new category for tutors.</CardDescription>
