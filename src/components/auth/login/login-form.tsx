@@ -58,21 +58,6 @@ export function LoginForm({
       onSubmit: fromDchema,
     },
     onSubmit: async ({ value }) => {
-      // setServerError(null);
-      // setIsLoading(true);
-      // const res = await signIn(value);
-      // setIsLoading(false);
-      // if (res?.error || res?.message || res?.code) {
-      //   setServerError(
-      //     res.error ??
-      //       res.message ??
-      //       "Invalid email or password. Please try again.",
-      //   );
-      //   return;
-      // }
-      // if (res && !res.error) {
-      //   router.push("/");
-      // }
       const toastId = toast.loading("Signing in...");
 
       try {

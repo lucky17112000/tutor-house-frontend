@@ -28,7 +28,6 @@ const TutorPage = async ({
         ))}
       </div>
 
-      {/* Fixed pagination at bottom */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 py-3">
         <Suspense fallback={<div className="text-center py-2">Loading...</div>}>
           <PaginationControles meta={pagination} />

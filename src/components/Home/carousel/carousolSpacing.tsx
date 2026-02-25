@@ -28,13 +28,12 @@ export function CarouselSpacing() {
   ];
 
   return (
-    // MODIFIED: w-full with no max-w so it stretches full width left to right
     <Carousel
       plugins={[
         Autoplay({
           delay: 1000,
-          stopOnInteraction: false, // MODIFIED: don't stop when user clicks
-          stopOnMouseEnter: false, // MODIFIED: don't pause on hover
+          stopOnInteraction: false,
+          stopOnMouseEnter: false,
         }),
       ]}
       className="w-full  py-10"
@@ -46,7 +45,6 @@ export function CarouselSpacing() {
           <CarouselItem key={index} className="basis-1/5 pl-1">
             <div className="p-1">
               <Card>
-                {/* MODIFIED: replaced number with image */}
                 <CardContent className="flex min-h-50 items-center justify-center p-0 overflow-hidden">
                   <img
                     src={src}
@@ -59,8 +57,6 @@ export function CarouselSpacing() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      {/* <CarouselPrevious />
-      <CarouselNext /> */}
     </Carousel>
   );
 }

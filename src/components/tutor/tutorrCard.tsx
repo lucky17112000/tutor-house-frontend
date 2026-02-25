@@ -3,32 +3,24 @@ import Link from "next/link";
 import { Star } from "lucide-react";
 
 type TutorCardProps = {
-  id: string; // ✅ Tutor এর unique ID - এটি dynamic route navigate করতে ব্যবহার হবে
+  id: string;
   image: string;
   name: string;
   bio: string;
-  rating: number; // e.g. 4.5
-  hourlyRate: number; // e.g. 25
+  rating: number;
+  hourlyRate: number;
 };
 
-// First image from /public/images used as fallback
 const DEFAULT_IMAGE = "/images/istockphoto-2247792230-2048x2048.webp";
 
 export default function TutorCard({ tutor }: { tutor: any }) {
-  // ✅ Debug: Check what ID we're getting
-  // console.log("TutorCard received tutor:", tutor);
-  console.log("Tutor ID:", tutor.id ?? tutor.id);
-
-  // Clamp rating between 0–5
   const clampedRating = Math.min(5, Math.max(0, tutor.rating ?? 0));
   const fullStars = Math.floor(clampedRating);
   const halfStar = clampedRating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
 
-  // ✅ Get the tutor ID
   const tutorId = tutor.id ?? tutor.id;
 
-  // ✅ If no ID, don't render Link
   if (!tutorId) {
     console.error("Tutor ID is missing:", tutor);
   }

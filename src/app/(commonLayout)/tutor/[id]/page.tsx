@@ -7,18 +7,17 @@ import Link from "next/link";
 import React from "react";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  //   const as = "5cb5fc78-274c-4d1b-8371-5f150c37fbae";
+ 
   const id = (await params).id;
   const res = await getSingleTutor(id);
-  // const session = await authClient.getSession();
-  // console.log("Session in Tutor Detail Page:", session);
+ 
   const session = await getSession();
   console.log("Session in Tutor Detail Page:", session);
 
   const userRole = session?.data?.user?.role ?? session?.data?.role ?? null;
   const isStudent = userRole?.toLowerCase() === "student";
 
-  // Parse availability JSON safely
+  
   let availability: Record<string, string[]> = {};
   try {
     const raw = res?.result?.availability;
@@ -29,11 +28,11 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     availability = {};
   }
 
-  // Simple hover card design with Tailwind
+ 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group">
-        {/* Image Section */}
+       
         <div className="relative">
           <img
             src={
@@ -45,9 +44,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           />
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition duration-300"></div>
         </div>
-        {/* Content Section */}
+        
         <div className="p-6">
-          {/* Name */}
+          
           <h1 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
             {res?.result?.name}
           </h1>

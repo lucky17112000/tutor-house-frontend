@@ -40,7 +40,6 @@ const layout = ({
     })();
   }, []);
 
-  // Extract id and name from fetched categories
   const categories: { id: string; name: string }[] = Array.isArray(data)
     ? data.map((c: any) => ({ id: c.id, name: c.name }))
     : ((data as any)?.data?.map((c: any) => ({ id: c.id, name: c.name })) ??

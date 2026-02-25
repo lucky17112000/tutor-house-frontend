@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { completeSt } from "@/actions/signin.actions";
 
 interface CompleteBookingButtonProps {
-  bookingId: string; // কোন বুকিং সম্পন্ন করতে হবে তার আইডি
+  bookingId: string;
 }
 
 export default function CompleteBookingButton({

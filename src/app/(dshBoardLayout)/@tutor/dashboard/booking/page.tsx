@@ -137,7 +137,6 @@ const TutorBooking = async () => {
                     </span>
                   </div>
 
-                  {/* Complete বাটন — শুধু CANCELLED ও COMPLETED ছাড়া বাকি সবখানে দেখাবে */}
                   {status.toUpperCase() !== "COMPLETED" &&
                     status.toUpperCase() !== "CANCELLED" && (
                       <CompleteBookingButton bookingId={booking.id} />
