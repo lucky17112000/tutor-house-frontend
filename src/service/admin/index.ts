@@ -179,3 +179,62 @@ export const adminCancelBooking = async () => {
     return { error: "Could not connect to backend." };
   }
 };
+//http://localhost:4000/admin/users/:userId
+//delete user by id (admin)
+export const deleteUser = async (userId: string) => {
+  const cokkieStore = await cookies();
+  const token = getSessionToken(cokkieStore);
+  console.log("Session token in deleteUser:", token);
+  if (!token) {
+    return { error: "No session token found. Please login first." };
+  }
+
+  try {
+    const response = await fetch(`${AUTH_URL}/admin/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cokkieStore.toString(),
+      },
+    });
+    if (response.status === 401) {
+      return { error: "Unauthorized. You do not have admin access." };
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return { error: "Could not connect to backend." };
+  }
+};
+// http://localhost:4000/admin/users/:userid/tutor-profile
+//delete tutor profile by user id (admin)
+//eta add kore dibo manage booking er modhye, jekhane admin user list theke ekjon tutor select kore tar profile delete korte parbe. eta korar jonno amader backend e already route ta ache, just frontend theke call korte hobe.
+export const deleteTutorProfile = async (userId: string) => {
+  const cokkieStore = await cookies();
+  const token = getSessionToken(cokkieStore);
+  console.log("Session token in deleteTutorProfile:", token);
+  if (!token) {
+    return { error: "No session token found. Please login first." };
+  }
+  try {
+    const response = await fetch(
+      `${AUTH_URL}/admin/users/${userId}/tutor-profile`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cokkieStore.toString(),
+        },
+      },
+    );
+    if (response.status === 401) {
+      return { error: "Unauthorized. You do not have admin access." };
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error deleting tutor profile:", error);
+    return { error: "Could not connect to backend." };
+  }
+};

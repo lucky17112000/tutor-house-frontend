@@ -1,24 +1,95 @@
 import { CarouselSpacing } from "@/components/Home/carousel/carousolSpacing";
-import { Footer2 } from "@/components/Home/footer/footer2";
+import StatsStrip from "@/components/Home/stats/StatsStrip";
 import StartText from "@/components/Home/startText/StartText";
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
-import Image from "next/image";
+import ScrollIndicator from "@/components/Home/ScrollIndicator";
+import CTABanner from "@/components/Home/sections/CTABanner";
+import FeaturedReviews from "@/components/Home/sections/FeaturedReviews";
+import HowItWorks from "@/components/Home/sections/HowItWorks";
+import SubjectCategories from "@/components/Home/sections/SubjectCategories";
+import Testimonials from "@/components/Home/sections/Testimonials";
+import WhyChooseUs from "@/components/Home/sections/WhyChooseUs";
+import VideoCallSection from "@/components/Home/sections/VideoCallSection";
+import FindTutorSection from "@/components/Home/sections/FindTutorSection";
 
 export default function Home() {
-  const createSession = async () => {
-    const session = await authClient.getSession();
-    console.log("Current session:", session);
-  };
   return (
-    <div className="">
-      {/* <Button className="bg-amber-200 text-blue-500">Shadcn Button</Button> */}
+    <div className="overflow-x-hidden">
+      <ScrollIndicator />
+      {/* 1 ── Hero slider: 3 auto-advancing slides + animated stats + marquee */}
       <StartText />
-      <div className="flex justify-center items-center">
-        {" "}
-        <CarouselSpacing />
-      </div>
-      <Footer2 />
+
+      {/* 2 ── Video call feature: dark section, animated mockup */}
+      <VideoCallSection />
+
+      {/* 3 ── Find your tutor hero block + marquee + 3D tilt cards */}
+      <FindTutorSection />
+
+      {/* 4 ── Stats strip: black bg, counts animate on scroll */}
+      <StatsStrip />
+
+      {/* 5 ── How It Works: 3 numbered steps */}
+      <HowItWorks />
+
+      {/* 6 ── Why Choose Us: 6 feature cards */}
+      <WhyChooseUs />
+
+      {/* 7 ── Subject categories: explore 40+ subjects */}
+      <SubjectCategories />
+
+      {/* 8 ── Featured tutors: continuous right-to-left image carousel */}
+      <section className="py-20 px-6 bg-white dark:bg-zinc-950">
+        <div className="max-w-295 mx-auto">
+          <div className="mb-10">
+            <div
+              className="inline-flex items-center gap-2.5 text-blue-700 dark:text-blue-400 mb-4"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                fontWeight: 500,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  width: 32,
+                  height: 1,
+                  background: "currentColor",
+                  flexShrink: 0,
+                }}
+              />
+              From the classroom
+            </div>
+            <h2
+              className="font-extrabold text-zinc-900 dark:text-white tracking-[-0.035em]"
+              style={{ fontSize: "clamp(30px,3.5vw,48px)", lineHeight: 1.05 }}
+            >
+              Real sessions,{" "}
+              <em
+                className="not-italic"
+                style={{ fontStyle: "italic", color: "#1d4ed8" }}
+              >
+                real results
+              </em>
+            </h2>
+          </div>
+          <CarouselSpacing />
+        </div>
+      </section>
+
+      {/* 7 ── Featured reviews: rating metrics + big quote + 3 mini cards */}
+      <FeaturedReviews />
+
+      {/* 8 ── Testimonials: 3 student cards + trust bar */}
+      <Testimonials />
+
+      {/* 9 ── CTA Banner: blue, email form */}
+      <section className="py-20 bg-white dark:bg-zinc-950">
+        <CTABanner />
+      </section>
+
+      {/* Footer is rendered by CommonLayout — not duplicated here */}
     </div>
   );
 }

@@ -45,11 +45,20 @@ const layout = ({
     : ((data as any)?.data?.map((c: any) => ({ id: c.id, name: c.name })) ??
       []);
 
+  const role = (session.data?.user as any)?.role?.toLowerCase();
+
+  const dashboardContent =
+    role === "admin"
+      ? admin
+      : role === "student"
+        ? student
+        : role === "tutor"
+          ? tutor
+          : (admin ?? student ?? tutor);
+
   return (
     <DashboardLayout user={session.data?.user} categories={categories}>
-      {admin}
-      {student}
-      {tutor}
+      {dashboardContent}
     </DashboardLayout>
   );
 };

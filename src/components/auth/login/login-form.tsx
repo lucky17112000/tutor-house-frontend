@@ -1,16 +1,12 @@
 "use client";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
+import { useForm } from "@tanstack/react-form";
+import * as Z from "zod";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 import {
   Field,
   FieldError,
@@ -18,60 +14,57 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useForm } from "@tanstack/react-form";
-import * as Z from "zod";
-// import { handleGoogleLogIn, signIn } from "@/service/auth";
-import { Mail, Lock, Eye, EyeOff, LogIn, AlertCircle } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
-// import { signIn } from "@/service/auth";
-import { toast } from "sonner";
 
-const fromDchema = Z.object({
+const loginSchema = Z.object({
   email: Z.email("Please enter a valid email address"),
   password: Z.string()
     .min(8, "Password must be at least 8 characters long")
     .max(100),
 });
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+const MARQUEE_ITEMS = [
+  "Calculus",
+  "SAT prep",
+  "French",
+  "Physics",
+  "Chess",
+  "Essay writing",
+  "Calculus",
+  "SAT prep",
+  "French",
+  "Physics",
+  "Chess",
+  "Essay writing",
+];
+
+export function LoginForm() {
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleGoogleLogIn = async () => {
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
-      callbackURL: "https://assingment-4-frontend.vercel.app/dashboard",
+      callbackURL: "http://localhost:3000/dashboard",
     });
   };
 
-  const router = useRouter();
-  const [serverError, setServerError] = useState<string | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    validators: {
-      onSubmit: fromDchema,
-    },
+    defaultValues: { email: "", password: "" },
+    validators: { onSubmit: loginSchema },
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Signing in...");
-
       try {
-        const { data, error } = await authClient.signIn.email(value);
+        const { error } = await authClient.signIn.email(value);
         if (error) {
           toast.error("Login failed. Please check your credentials.", {
             id: toastId,
           });
         } else {
           toast.success("Login successful!", { id: toastId });
-          router.push("/dashboard");
+          router.replace("/dashboard");
+          router.refresh();
         }
-      } catch (error) {
-        console.error("Login error:", error);
+      } catch {
         toast.error("An unexpected error occurred. Please try again.", {
           id: toastId,
         });
@@ -79,55 +72,175 @@ export function LoginForm({
     },
   });
 
+  const quickLogin = async (email: string, password: string) => {
+    const toastId = toast.loading("Signing in...");
+    try {
+      const { error } = await authClient.signIn.email({ email, password });
+      if (error) {
+        toast.error("Login failed. Please check your credentials.", {
+          id: toastId,
+        });
+      } else {
+        toast.success("Login successful!", { id: toastId });
+        router.replace("/dashboard");
+        router.refresh();
+      }
+    } catch {
+      toast.error("An unexpected error occurred. Please try again.", {
+        id: toastId,
+      });
+    }
+  };
+
+  const QUICK_LOGINS = [
+    {
+      label: "Admin",
+      email: "tempreal17112000@gmail.com",
+      password: "Admin12345",
+    },
+    { label: "Tutor", email: "ttr@gmail.com", password: "password1234" },
+    { label: "Student", email: "std@gmail.com", password: "password1234" },
+  ];
+
   return (
-    <div
-      className={cn(
-        "flex items-center justify-center min-h-screen w-full px-4",
-        className,
-      )}
-      {...props}
-    >
-      <Card className="w-full max-w-md shadow-2xl border-0 rounded-3xl overflow-hidden">
-        {/* Animated gradient header */}
-        <div className="bg-linear-to-br from-violet-600 via-indigo-600 to-blue-500 px-6 pt-6 pb-5 text-white relative overflow-hidden">
-          {/* Decorative blurred circles */}
-          <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full blur-2xl" />
-          <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f5f1] px-4 py-10">
+      {/* Card */}
+      <div className="w-full max-w-[920px] bg-white rounded-[28px] overflow-hidden grid grid-cols-1 md:grid-cols-2 shadow-[0_36px_80px_-20px_rgba(10,10,10,0.28),0_12px_28px_-12px_rgba(10,10,10,0.18)] border border-black/10">
+        {/* ── LEFT PANEL ── */}
+        <div className="relative hidden md:flex flex-col justify-between overflow-hidden bg-zinc-900 text-white p-9 min-h-[560px]">
+          <Image
+            src="/images/pexels-cottonbro-5483071.jpg"
+            alt="Tutoring session"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Blue gradient overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(165deg,rgba(29,78,216,0.78)_0%,rgba(29,78,216,0.55)_35%,rgba(10,10,10,0.85)_100%)]" />
 
-          {/* Animated icon */}
-          <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/20 backdrop-blur mx-auto mb-3 shadow-lg animate-pulse">
-            <LogIn className="w-6 h-6 text-white" />
+          {/* Content */}
+          <div className="relative z-10 flex flex-col justify-between h-full">
+            {/* Brand */}
+            <a
+              href="/"
+              className="flex items-center gap-2.5 text-white font-semibold text-[17px] tracking-[-0.01em] w-fit"
+            >
+              <span className="w-8 h-8 bg-white text-blue-700 rounded-[9px] grid place-items-center font-semibold text-[13px]">
+                T
+              </span>
+              tutorhouse
+            </a>
+
+            {/* Headline + sub + marquee */}
+            <div>
+              <h1 className="font-serif font-normal text-[44px] leading-[1.04] tracking-[-0.02em] text-balance">
+                Find a tutor
+                <br />
+                who&nbsp;
+                <span className="inline-block overflow-hidden h-[50px] align-bottom min-w-[220px]">
+                  <span className="flex flex-col animate-rotate-words">
+                    <span className="block h-[50px] leading-[50px] italic bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+                      gets&nbsp;you.
+                    </span>
+                    <span className="block h-[50px] leading-[50px] italic bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+                      fits&nbsp;you.
+                    </span>
+                    <span className="block h-[50px] leading-[50px] italic bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+                      teaches.
+                    </span>
+                    <span className="block h-[50px] leading-[50px] italic bg-gradient-to-r from-white to-indigo-300 bg-clip-text text-transparent">
+                      gets&nbsp;you.
+                    </span>
+                  </span>
+                </span>
+              </h1>
+
+              <p className="text-sm text-white/78 leading-[1.55] mt-4 max-w-[360px]">
+                Join 94,000+ learners matched with vetted tutors across 180
+                subjects. First session is on us — no card required.
+              </p>
+
+              {/* Marquee */}
+              <div className="mt-6 flex gap-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent_0%,#000_8%,#000_92%,transparent_100%)]">
+                <div className="flex gap-8 animate-auth-marquee shrink-0">
+                  {MARQUEE_ITEMS.map((item, i) => (
+                    <span
+                      key={i}
+                      className="flex items-center gap-2 font-medium text-xs text-white/65 tracking-[0.04em] whitespace-nowrap"
+                    >
+                      <span className="w-1 h-1 rounded-full bg-blue-400 shrink-0" />
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-
-          <CardHeader className="p-0 text-center relative z-10">
-            <CardTitle className="text-xl font-bold text-white tracking-tight">
-              Welcome back
-            </CardTitle>
-            <CardDescription className="text-indigo-100 text-xs mt-1">
-              Sign in to your account to continue
-            </CardDescription>
-          </CardHeader>
         </div>
 
-        {/* Form body */}
-        <CardContent className="px-6 pt-5 pb-2 bg-white dark:bg-zinc-900">
-          {/* Server error banner */}
-          {serverError && (
-            <div className="mb-4 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-600 dark:text-red-400 flex items-start gap-2 animate-in fade-in slide-in-from-top-2 duration-300">
-              <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-              <span>{serverError}</span>
-            </div>
-          )}
+        {/* ── RIGHT PANEL — form ── */}
+        <div className="flex flex-col justify-center gap-5 px-10 py-12">
+          {/* Heading */}
+          <div>
+            <h2 className="font-serif font-normal text-[30px] leading-[1.1] tracking-[-0.015em] text-zinc-900 mb-2">
+              Welcome <em className="text-blue-700 not-italic">back.</em>
+            </h2>
+            <p className="text-sm text-zinc-500">
+              Sign in to your account to continue.
+            </p>
+          </div>
 
+          {/* Google button */}
+          <button
+            type="button"
+            onClick={handleGoogleLogIn}
+            className="group w-full h-[46px] rounded-xl border border-black/10 bg-white text-zinc-900 font-medium text-sm flex items-center justify-center gap-2.5 relative overflow-hidden transition-all duration-300 hover:border-blue-700 hover:-translate-y-px"
+          >
+            <span className="absolute inset-0 bg-blue-50 scale-x-0 origin-left transition-transform duration-[450ms] cubic-bezier(0.65,0,0.35,1) group-hover:scale-x-100" />
+            <svg
+              className="relative z-10 shrink-0"
+              width="16"
+              height="16"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="#FFC107"
+                d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"
+              />
+              <path
+                fill="#FF3D00"
+                d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"
+              />
+              <path
+                fill="#4CAF50"
+                d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"
+              />
+              <path
+                fill="#1976D2"
+                d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"
+              />
+            </svg>
+            <span className="relative z-10">Continue with Google</span>
+          </button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 font-medium text-[11px] uppercase tracking-[0.16em] text-zinc-400">
+            <span className="flex-1 h-px bg-black/10" />
+            or with email
+            <span className="flex-1 h-px bg-black/10" />
+          </div>
+
+          {/* Fields */}
           <form
             id="login-form"
             onSubmit={(e) => {
               e.preventDefault();
               form.handleSubmit();
             }}
+            className="grid gap-3.5"
           >
-            <FieldGroup className="space-y-3">
-              {/* Email field */}
+            <FieldGroup>
+              {/* Email */}
               <form.Field
                 name="email"
                 children={(field) => {
@@ -137,20 +250,20 @@ export function LoginForm({
                     <Field>
                       <FieldLabel
                         htmlFor={field.name}
-                        className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wide"
+                        className="text-xs font-medium text-zinc-500 tracking-[0.02em]"
                       >
-                        Email Address
+                        Email address
                       </FieldLabel>
-                      <div className="relative mt-1 group">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-indigo-500 transition-colors duration-200" />
+                      <div className="relative mt-1.5 group">
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-blue-700 transition-colors" />
                         <Input
-                          value={field.state.value}
-                          onChange={(e) => field.handleChange(e.target.value)}
                           id={field.name}
                           type="email"
                           placeholder="you@example.com"
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
                           required
-                          className="pl-10 h-10 rounded-xl border-zinc-200 dark:border-zinc-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all duration-200"
+                          className="h-[46px] pl-10 rounded-xl border-black/10 bg-[#f5f5f1] text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:bg-white focus:shadow-[0_0_0_4px_rgba(29,78,216,0.12)] transition-all"
                         />
                       </div>
                       {isInvalid && (
@@ -161,7 +274,7 @@ export function LoginForm({
                 }}
               />
 
-              {/* Password field with show/hide toggle */}
+              {/* Password */}
               <form.Field
                 name="password"
                 children={(field) => {
@@ -172,34 +285,33 @@ export function LoginForm({
                       <div className="flex items-center justify-between">
                         <FieldLabel
                           htmlFor={field.name}
-                          className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wide"
+                          className="text-xs font-medium text-zinc-500 tracking-[0.02em]"
                         >
                           Password
                         </FieldLabel>
                         <a
                           href="/forgot-password"
-                          className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+                          className="text-xs text-blue-700 hover:text-zinc-900 font-medium transition-colors"
                         >
                           Forgot password?
                         </a>
                       </div>
-                      <div className="relative mt-1 group">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-indigo-500 transition-colors duration-200" />
+                      <div className="relative mt-1.5 group">
+                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-blue-700 transition-colors" />
                         <Input
-                          value={field.state.value}
-                          onChange={(e) => field.handleChange(e.target.value)}
                           id={field.name}
                           type={showPassword ? "text" : "password"}
-                          placeholder="Min. 8 characters"
+                          placeholder="At least 8 characters"
+                          value={field.state.value}
+                          onChange={(e) => field.handleChange(e.target.value)}
                           required
-                          className="pl-10 pr-10 h-10 rounded-xl border-zinc-200 dark:border-zinc-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all duration-200"
+                          className="h-[46px] pl-10 pr-10 rounded-xl border-black/10 bg-[#f5f5f1] text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:bg-white focus:shadow-[0_0_0_4px_rgba(29,78,216,0.12)] transition-all"
                         />
-                        {/* Animated eye toggle */}
                         <button
                           type="button"
-                          onClick={() => setShowPassword((p) => !p)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-indigo-500 transition-colors duration-200 focus:outline-none"
                           tabIndex={-1}
+                          onClick={() => setShowPassword((p) => !p)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-blue-700 transition-colors"
                         >
                           {showPassword ? (
                             <EyeOff className="w-4 h-4" />
@@ -217,101 +329,56 @@ export function LoginForm({
               />
             </FieldGroup>
           </form>
-        </CardContent>
 
-        {/* Footer */}
-        <CardFooter className="flex flex-col gap-3 px-6 pb-6 pt-3 bg-white dark:bg-zinc-900">
-          <Button
+          {/* Submit */}
+          <button
             type="submit"
             form="login-form"
-            disabled={isLoading}
-            className="w-full h-10 rounded-xl bg-linear-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-sm shadow-lg shadow-indigo-200 dark:shadow-indigo-900 transition-all duration-200 disabled:opacity-70"
+            className="group relative w-full h-[50px] rounded-xl border-0 bg-zinc-900 text-white font-medium text-[14.5px] overflow-hidden isolate shadow-[0_8px_22px_-8px_rgba(10,10,10,0.5)] flex items-center justify-center gap-2.5 transition-all duration-[400ms] hover:-translate-y-0.5 hover:shadow-[0_16px_32px_-10px_rgba(29,78,216,0.55)]"
           >
-            {isLoading ? (
-              <span className="flex items-center gap-2">
-                <svg
-                  className="animate-spin h-4 w-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8z"
-                  />
-                </svg>
-                Signing in...
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <LogIn className="w-4 h-4" />
-                Sign In
-              </span>
-            )}
-          </Button>
-          {/* Divider */}
-          <div className="relative w-full flex items-center gap-3">
-            <div className="flex-1 h-px bg-zinc-200 dark:bg-zinc-700" />
-            <span className="text-xs text-zinc-400 dark:text-zinc-500 font-medium uppercase tracking-wide">
-              or
-            </span>
-            <div className="flex-1 h-px bg-zinc-200 dark:bg-zinc-700" />
+            <span className="absolute inset-0 bg-blue-700 -translate-x-full group-hover:translate-x-0 transition-transform duration-500 cubic-bezier(0.65,0,0.35,1) -z-10" />
+            <span>Sign in</span>
+            <svg
+              className="w-3.5 h-3.5 transition-transform duration-[400ms] group-hover:translate-x-1"
+              viewBox="0 0 14 14"
+              fill="none"
+            >
+              <path
+                d="M2 7h10M8 3l4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+
+          {/* Quick login */}
+          <div className="grid grid-cols-3 gap-2">
+            {QUICK_LOGINS.map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => quickLogin(item.email, item.password)}
+                className="h-[38px] rounded-lg border border-black/10 bg-white text-zinc-700 text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-200 hover:border-blue-700 hover:text-blue-700"
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
 
-          {/* Google Sign In Button */}
-          <Button
-            type="button"
-            onClick={() => handleGoogleLogIn()}
-            variant="outline"
-            className="w-full h-10 rounded-xl border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-gradient-to-r hover:from-blue-50 hover:via-red-50 hover:to-yellow-50 dark:hover:from-blue-950/40 dark:hover:via-red-950/40 dark:hover:to-yellow-950/40 hover:border-blue-300 dark:hover:border-blue-700 text-zinc-700 dark:text-zinc-200 font-medium text-sm transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-blue-100 dark:hover:shadow-blue-900/30 hover:scale-[1.02] cursor-pointer"
-          >
-            <span className="flex items-center gap-3">
-              {/* Google "G" logo as inline SVG */}
-              <svg
-                className="w-5 h-5"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
-                  fill="#4285F4"
-                />
-                <path
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                  fill="#34A853"
-                />
-                <path
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                  fill="#FBBC05"
-                />
-                <path
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                  fill="#EA4335"
-                />
-              </svg>
-              Continue with Google
-            </span>
-          </Button>
-
-          <p className="text-center text-xs text-zinc-500 dark:text-zinc-400">
+          {/* Footer */}
+          <p className="text-center text-[13.5px] text-zinc-500">
             Don&apos;t have an account?{" "}
             <a
               href="/signup"
-              className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+              className="text-blue-700 font-medium border-b border-blue-700 hover:text-zinc-900 hover:border-zinc-900 transition-colors"
             >
-              Create one
+              Sign up
             </a>
           </p>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

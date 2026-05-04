@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About us · Tutor House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page.css">
+<style>
+  /* ---------- About-specific ---------- */
+  .about-hero { position: relative; overflow: hidden; }
+  .about-hero .accent {
+    position: absolute;
+    right: -120px; top: -120px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle at center, rgba(29,78,216,0.18), transparent 65%);
+    pointer-events: none;
+    border-radius: 50%;
+    filter: blur(20px);
+  }
+
+  /* Story block */
+  .story {
+    padding: 120px 32px;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+  .story-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .story-img {
+    aspect-ratio: 4 / 5;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px -20px rgba(10,10,10,0.18);
+  }
+  .story-img img { width: 100%; height: 100%; object-fit: cover; }
+  .story-img-tag {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 12px 24px -8px rgba(10,10,10,0.18);
+  }
+  .story-text { padding-top: 40px; }
+  .story-text h2 {
+    font-family: var(--serif);
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-bottom: 28px;
+    text-wrap: balance;
+  }
+  .story-text h2 em { color: var(--blue); }
+  .story-text p {
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    text-wrap: pretty;
+  }
+  .story-text p strong { color: var(--ink); font-weight: 600; }
+  .story-pull {
+    margin: 36px 0;
+    padding-left: 24px;
+    border-left: 3px solid var(--blue);
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* Numbers band */
+  .numbers {
+    padding: 100px 32px;
+    background: var(--ink);
+    color: var(--white);
+  }
+  .numbers-inner { max-width: 1200px; margin: 0 auto; }
+  .numbers-head {
+    display: flex; align-items: end; justify-content: space-between;
+    margin-bottom: 60px;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .numbers-head .eyebrow { color: var(--blue); }
+  .numbers-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    max-width: 620px;
+  }
+  .numbers-head h2 em { color: var(--blue); }
+  .numbers-head p {
+    color: rgba(255,255,255,0.62);
+    max-width: 380px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .number {
+    padding: 36px 28px 36px 0;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+  .number:last-child { border-right: 0; }
+  .number-num {
+    font-family: var(--serif);
+    font-size: clamp(48px, 5.5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .number-num em { color: var(--blue); font-style: normal; }
+  .number-label {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* Values grid */
+  .values {
+    padding: 120px 32px;
+    background: var(--bg);
+  }
+  .values-inner { max-width: 1200px; margin: 0 auto; }
+  .values-head { margin-bottom: 60px; max-width: 720px; }
+  .values-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-top: 16px;
+    text-wrap: balance;
+  }
+  .values-head h2 em { color: var(--blue); }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .value-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 36px 32px;
+    transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.45s ease, border-color 0.45s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -16px rgba(10,10,10,0.12);
+    border-color: rgba(29,78,216,0.3);
+  }
+  .value-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--blue);
+    letter-spacing: 0.14em;
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .value-num::after {
+    content: ""; flex: 1; height: 1px; background: var(--line);
+  }
+  .value-card h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    margin-bottom: 14px;
+  }
+  .value-card p {
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+
+  /* Team grid */
+  .team {
+    padding: 120px 32px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+  }
+  .team-inner { max-width: 1200px; margin: 0 auto; }
+  .team-head { margin-bottom: 60px; }
+  .team-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin-top: 16px;
+  }
+  .team-head h2 em { color: var(--blue); }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .person {
+    cursor: pointer;
+  }
+  .person-img {
+    aspect-ratio: 4/5;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: #eee;
+    position: relative;
+  }
+  .person-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .person:hover .person-img img { transform: scale(1.06); }
+  .person-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .person-role {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+
+  /* CTA banner */
+  .cta-banner {
+    margin: 100px 32px 120px;
+    max-width: 1200px;
+    margin-left: auto; margin-right: auto;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: 32px;
+    padding: 72px 56px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-banner::before {
+    content: "";
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.18), transparent 70%);
+  }
+  .cta-banner h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+  .cta-banner p {
+    margin-top: 14px;
+    color: rgba(255,255,255,0.78);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 520px;
+  }
+  .cta-banner-btns {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    justify-content: flex-end;
+    position: relative; z-index: 2;
+  }
+  .cta-pill {
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .cta-pill.solid {
+    background: var(--white);
+    color: var(--blue);
+  }
+  .cta-pill.solid:hover { transform: translateY(-2px); }
+  .cta-pill.ghost {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .cta-pill.ghost:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .story { padding: 60px 20px; }
+    .story-grid { grid-template-columns: 1fr; gap: 40px; }
+    .story-text { padding-top: 0; }
+    .numbers { padding: 60px 20px; }
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+    .number { padding: 28px 20px 28px 0; }
+    .number:nth-child(2n) { border-right: 0; }
+    .number:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.12); }
+    .values { padding: 60px 20px; }
+    .values-grid { grid-template-columns: 1fr; gap: 16px; }
+    .team { padding: 60px 20px; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .cta-banner { padding: 48px 28px; grid-template-columns: 1fr; margin: 60px 20px 80px; }
+    .cta-banner-btns { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" id="nav">
+  <a href="../Landing Page.html" class="nav-brand" aria-label="Tutor House home">
+    <span class="nav-brand-mark">T</span>
+    <span>tutorhouse</span>
+  </a>
+  <ul class="nav-links">
+    <li><a class="nav-link" href="../Landing Page.html#tutors">Tutors</a></li>
+    <li><a class="nav-link active" href="about.html">About us</a></li>
+    <li><a class="nav-link" href="blog.html">Blog</a></li>
+    <li><a class="nav-link" href="contact.html">Contact us</a></li>
+    <li class="nav-has-menu">
+      <button class="nav-link nav-link-menu">More <span class="nav-caret">▾</span></button>
+      <div class="nav-menu">
+        <a href="../Landing Page.html#mission">Our mission</a>
+        <a href="../Landing Page.html#developer">Developer</a>
+        <a href="../Landing Page.html#community">Community</a>
+        <a href="../Landing Page.html#faq">FAQ</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy policy</a>
+      </div>
+    </li>
+  </ul>
+  <a href="contact.html" class="nav-cta">
+    Get started
+    <svg class="nav-cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="page-hero about-hero">
+  <div class="accent"></div>
+  <div class="page-hero-inner">
+    <div class="crumbs">
+      <a href="../Landing Page.html">Home</a>
+      <span class="sep">/</span>
+      <span>About us</span>
+    </div>
+    <h1>We make great teachers <em>findable.</em></h1>
+    <p class="lede">Tutor House started in 2019 with a simple frustration: the best tutors were buried under spam, and the worst ones had the loudest profiles. So we built the platform we wished existed — vetted, transparent, and ruthlessly student-first.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     STORY
+     ============================================================ -->
+<section class="story">
+  <div class="story-grid">
+    <div class="story-img">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Tutor House team at work">
+      <div class="story-img-tag">Brooklyn HQ · est. 2019</div>
+    </div>
+    <div class="story-text">
+      <div class="eyebrow">Our story</div>
+      <h2>Built by educators, for the <em>students</em> they couldn't reach.</h2>
+      <p>Our founders — <strong>Maya</strong>, a high-school math teacher, and <strong>Jordan</strong>, an ed-tech engineer — met in a Brooklyn coffee shop in 2018. Maya had spent the year referring her students to tutors she trusted. Jordan had spent it watching marketplace platforms reward whoever paid the most for ads.</p>
+      <div class="story-pull">"Every kid deserves the tutor I'd send my own to. Not the one with the slickest profile."</div>
+      <p>That mismatch became Tutor House. We hand-vet every tutor through a three-stage interview, publish honest outcome data, and refund any first session that doesn't click. No ad slots. No premium placements. The marketplace ranks on results.</p>
+      <p>Six years later, we're a remote team of 38 across Brooklyn, Lagos, and Dhaka — half educators, half engineers — serving 94,000+ learners across 47 countries.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     NUMBERS
+     ============================================================ -->
+<section class="numbers">
+  <div class="numbers-inner">
+    <div class="numbers-head">
+      <div>
+        <div class="eyebrow">By the numbers</div>
+        <h2>Six years, <em>measured</em>.</h2>
+      </div>
+      <p>We don't run vanity metrics. These are the four numbers we look at every Monday.</p>
+    </div>
+    <div class="numbers-grid">
+      <div class="number">
+        <div class="number-num"><em>94K</em>+</div>
+        <div class="number-label">Learners matched</div>
+      </div>
+      <div class="number">
+        <div class="number-num">2,400</div>
+        <div class="number-label">Vetted tutors</div>
+      </div>
+      <div class="number">
+        <div class="number-num">4.9<em>/5</em></div>
+        <div class="number-label">Avg session rating</div>
+      </div>
+      <div class="number">
+        <div class="number-num">47</div>
+        <div class="number-label">Countries served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VALUES
+     ============================================================ -->
+<section class="values">
+  <div class="values-inner">
+    <div class="values-head">
+      <div class="eyebrow">What we believe</div>
+      <h2>Five rules we won't <em>compromise</em> on.</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-num">01 / Vetted</div>
+        <h3>Quality over catalog size.</h3>
+        <p>We'd rather have 2,400 great tutors than 24,000 anyone-can-join profiles. Every applicant runs the gauntlet — subject test, mock session, reference call.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">02 / Transparent</div>
+        <h3>Outcomes, in public.</h3>
+        <p>Every tutor profile shows real outcome data: average grade lift, completion rate, repeat-booking rate. No padded stats, no fake reviews.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">03 / Aligned</div>
+        <h3>No paid placements, ever.</h3>
+        <p>Tutors can't pay to rank higher. Search results sort by fit and outcomes — full stop. Our incentives stay pointed at the learner.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">04 / Forgiving</div>
+        <h3>First session is on us.</h3>
+        <p>If your first session doesn't click, we refund it. No forms, no calls, no "how can we keep your business?" Just the money back.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">05 / Human</div>
+        <h3>Real people, real replies.</h3>
+        <p>Support is staffed by former teachers — not ticket-deflecting bots. Median first-reply time during business hours: under 4 minutes.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">06 / Honest</div>
+        <h3>We say no a lot.</h3>
+        <p>Tutoring isn't right for every problem. If you'd be better served by a free YouTube playlist, we'll tell you and link to one. Trust compounds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TEAM
+     ============================================================ -->
+<section class="team">
+  <div class="team-inner">
+    <div class="team-head">
+      <div class="eyebrow">The humans</div>
+      <h2>A small team in <em>three time zones</em>.</h2>
+    </div>
+    <div class="team-grid">
+      <div class="person">
+        <div class="person-img"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80" alt=""></div>
+        <div class="person-name">Maya Rodríguez</div>
+        <div class="person-role">Co-founder · CEO</div>
+      </div>
+      <div class="person">
+        <div class="person-img"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80" alt=""></div>
+        <div class="person-name">Jordan Park</div>
+        <div class="person-role">Co-founder · CTO</div>
+      </div>
+      <div class="person">
+        <div class="person-img"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt=""></div>
+        <div class="person-name">Aisha Bello</div>
+        <div class="person-role">Head of tutor success</div>
+      </div>
+      <div class="person">
+        <div class="person-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt=""></div>
+        <div class="person-name">Tahmid Rahman</div>
+        <div class="person-role">Head of engineering</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BANNER
+     ============================================================ -->
+<section style="background: var(--bg);">
+  <div class="cta-banner">
+    <div>
+      <h2>Ready to find a tutor who actually <em>gets you?</em></h2>
+      <p>Tell us the subject, the goal, the vibe. We'll surface three matches in under a minute — and the first session is always on us.</p>
+    </div>
+    <div class="cta-banner-btns">
+      <a href="contact.html" class="cta-pill solid">Get matched →</a>
+      <a href="../Landing Page.html#tutors" class="cta-pill ghost">Browse tutors</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand-block">
+      <div class="footer-brand">
+        <div class="footer-brand-mark">th</div>
+        <div>tutorhouse</div>
+      </div>
+      <p class="footer-tag">A better way to find a tutor that gets you. Built by educators in Brooklyn, Lagos, and Dhaka.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social" aria-label="Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="#" class="footer-social" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" class="footer-social" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.546 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="#" class="footer-social" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.36-3.87-1.36-.52-1.31-1.27-1.66-1.27-1.66-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.17a10.95 10.95 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.36-5.25 5.65.41.36.78 1.06.78 2.14v3.17c0 .31.21.66.79.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <ul>
+        <li><a href="../Landing Page.html#tutors">Tutors</a></li>
+        <li><a href="#">Subjects</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Become a tutor</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="../Landing Page.html#mission">Our mission</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Resources</h5>
+      <ul>
+        <li><a href="../Landing Page.html#developer">Developer</a></li>
+        <li><a href="../Landing Page.html#community">Community</a></li>
+        <li><a href="../Landing Page.html#faq">FAQ</a></li>
+        <li><a href="contact.html">Contact us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html#cookies">Cookies</a></li>
+        <li><a href="terms.html#use">Acceptable use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <div>© 2026 Tutor House Inc. — Made with care, in three time zones.</div>
+    <div class="footer-bot-links">
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

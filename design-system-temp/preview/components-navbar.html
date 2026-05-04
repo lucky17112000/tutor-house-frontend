@@ -1,0 +1,444 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root {
+    --blue: #1d4ed8;
+    --blue-bright: #2563eb;
+    --blue-soft: #eef2ff;
+    --ink: #0a0a0a;
+    --ink-2: #18181b;
+    --ink-soft: rgba(10,10,10,0.62);
+    --white: #ffffff;
+    --line: rgba(10,10,10,0.08);
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--white);
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+  .lbl {
+    padding: 28px 32px 12px;
+    font: 600 11px var(--font-sans);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Stage to demonstrate two states */
+  .stage {
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+  }
+  .stage.dark {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .stage.dark .lbl { color: rgba(255,255,255,0.5); }
+
+  /* =========================================================
+     NAV
+     ========================================================= */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 10;
+  }
+  .nav.on-dark {
+    background: rgba(10,10,10,0.7);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Brand */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .nav.on-dark .brand { color: var(--white); }
+  .brand-mark {
+    width: 32px; height: 32px;
+    background: var(--blue);
+    color: var(--white);
+    border-radius: 9px;
+    display: grid; place-items: center;
+    font: 600 13px var(--font-sans);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .brand:hover .brand-mark {
+    transform: rotate(-12deg) scale(1.08);
+  }
+
+  /* Menu */
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  .menu li { position: relative; }
+  .menu > li > a,
+  .menu > li > button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    font: 500 14px var(--font-sans);
+    color: var(--ink-soft);
+    text-decoration: none;
+    border: 0; background: transparent;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: color 0.25s ease;
+    overflow: hidden;
+  }
+  .nav.on-dark .menu > li > a,
+  .nav.on-dark .menu > li > button { color: rgba(255,255,255,0.7); }
+
+  /* Underline reveal */
+  .menu > li > a::before,
+  .menu > li > button::before {
+    content: "";
+    position: absolute;
+    left: 16px; right: 16px; bottom: 6px;
+    height: 1.5px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .menu > li > a:hover,
+  .menu > li > button:hover { color: var(--blue); }
+  .menu > li > a:hover::before,
+  .menu > li > button:hover::before { transform: scaleX(1); }
+  .menu > li.active > a {
+    color: var(--blue);
+  }
+  .menu > li.active > a::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Caret animation */
+  .caret {
+    width: 10px; height: 10px;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 0.6;
+  }
+  .has-menu:hover > button .caret,
+  .has-menu:focus-within > button .caret {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  /* =========================================================
+     DROPDOWN
+     ========================================================= */
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 260px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(10,10,10,0.08);
+    border-radius: 16px;
+    padding: 8px;
+    box-shadow: 0 24px 48px -12px rgba(10,10,10,0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.98);
+    transform-origin: top right;
+    transition: opacity 0.3s ease,
+                transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+                visibility 0.3s ease;
+  }
+  .has-menu:hover > .dropdown,
+  .has-menu:focus-within > .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  .dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    font: 500 14px var(--font-sans);
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background 0.2s ease,
+                color 0.2s ease,
+                padding-left 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .dropdown a:hover {
+    background: var(--blue-soft);
+    color: var(--blue);
+    padding-left: 18px;
+  }
+  .dd-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(10,10,10,0.05);
+    color: var(--ink-soft);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .dropdown a:hover .dd-icon {
+    background: var(--blue);
+    color: var(--white);
+    transform: rotate(-6deg) scale(1.05);
+  }
+  .dd-text { line-height: 1.3; }
+  .dd-text small {
+    display: block;
+    font: 400 11.5px var(--font-sans);
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .dd-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 6px 8px;
+  }
+  .dd-section {
+    padding: 8px 14px 4px;
+    font: 600 10.5px var(--font-sans);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* =========================================================
+     ACTIONS / BUTTONS
+     ========================================================= */
+  .actions { display: flex; align-items: center; gap: 8px; }
+  .btn {
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font: 500 13.5px var(--font-sans);
+    border: 0;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.4s ease,
+                color 0.3s ease;
+  }
+  .btn-out {
+    background: transparent;
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1.5px var(--ink);
+  }
+  .btn-out::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: -1;
+  }
+  .btn-out:hover {
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+  .btn-out:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  .nav.on-dark .btn-out {
+    color: var(--white);
+    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.4);
+  }
+  .nav.on-dark .btn-out::before { background: var(--white); }
+  .nav.on-dark .btn-out:hover { color: var(--ink); }
+
+  .btn-pri {
+    background: var(--ink);
+    color: var(--white);
+    box-shadow: 0 6px 16px -6px rgba(10,10,10,0.4);
+  }
+  .btn-pri::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: var(--blue);
+    transform: translateX(-101%);
+    transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: -1;
+  }
+  .btn-pri:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -8px rgba(29, 78, 216, 0.55);
+  }
+  .btn-pri:hover::before { transform: translateX(0); }
+  .btn-pri .arrow {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .btn-pri:hover .arrow { transform: translateX(4px); }
+  .nav.on-dark .btn-pri {
+    background: var(--white);
+    color: var(--ink);
+  }
+  .nav.on-dark .btn-pri::before { background: var(--blue); }
+  .nav.on-dark .btn-pri:hover { color: var(--white); }
+
+  /* =========================================================
+     SECONDARY DEMO: scrolled state with darker bg
+     ========================================================= */
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     LIGHT NAV
+     ========================================================= -->
+<div class="stage">
+  <div class="lbl">Light · sticky · animated dropdown · 3-color palette</div>
+  <nav class="nav">
+    <div style="display:flex; align-items:center; gap: 28px;">
+      <a href="#" class="brand">
+        <span class="brand-mark">T</span>
+        <span>tutorhouse</span>
+      </a>
+      <ul class="menu">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Tutors</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact us</a></li>
+        <li class="has-menu">
+          <button>
+            More
+            <svg class="caret" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dropdown">
+            <div class="dd-section">Resources</div>
+            <a href="#">
+              <span class="dd-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18M3 12h18M3 19h18"/></svg>
+              </span>
+              <span class="dd-text">Our mission<small>What we believe</small></span>
+            </a>
+            <a href="#">
+              <span class="dd-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </span>
+              <span class="dd-text">Developer<small>API &amp; docs</small></span>
+            </a>
+            <a href="#">
+              <span class="dd-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+              </span>
+              <span class="dd-text">Community<small>Discords &amp; study halls</small></span>
+            </a>
+            <a href="#">
+              <span class="dd-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
+              <span class="dd-text">FAQ<small>Common questions</small></span>
+            </a>
+            <div class="dd-divider"></div>
+            <div class="dd-section">Legal</div>
+            <a href="#">
+              <span class="dd-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </span>
+              <span class="dd-text">Terms of service<small>The full version</small></span>
+            </a>
+            <a href="#">
+              <span class="dd-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <span class="dd-text">Privacy policy<small>What we collect &amp; why</small></span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="actions">
+      <button class="btn btn-out">Log in</button>
+      <button class="btn btn-pri">
+        <span>Get started</span>
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- =========================================================
+     DARK NAV (inverted)
+     ========================================================= -->
+<div class="stage dark">
+  <div class="lbl">Dark · same component, inverted treatment</div>
+  <nav class="nav on-dark">
+    <div style="display:flex; align-items:center; gap: 28px;">
+      <a href="#" class="brand">
+        <span class="brand-mark">T</span>
+        <span>tutorhouse</span>
+      </a>
+      <ul class="menu">
+        <li><a href="#">Home</a></li>
+        <li class="active"><a href="#">Tutors</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact us</a></li>
+        <li class="has-menu">
+          <button>
+            More
+            <svg class="caret" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dropdown">
+            <div class="dd-section">Resources</div>
+            <a href="#"><span class="dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18M3 12h18M3 19h18"/></svg></span><span class="dd-text">Our mission<small>What we believe</small></span></a>
+            <a href="#"><span class="dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span><span class="dd-text">Developer<small>API &amp; docs</small></span></a>
+            <a href="#"><span class="dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span class="dd-text">FAQ<small>Common questions</small></span></a>
+            <div class="dd-divider"></div>
+            <div class="dd-section">Legal</div>
+            <a href="#"><span class="dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span class="dd-text">Terms of service<small>The full version</small></span></a>
+            <a href="#"><span class="dd-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span class="dd-text">Privacy policy<small>What we collect</small></span></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="actions">
+      <button class="btn btn-out">Log in</button>
+      <button class="btn btn-pri">
+        <span>Get started</span>
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div style="padding: 60px 32px; text-align: center; color: rgba(255,255,255,0.4); font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.04em;">
+    ↑ Hover the "More" button to open the dropdown
+  </div>
+</div>
+
+</body>
+</html>

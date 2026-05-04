@@ -1,0 +1,263 @@
+/* =====================================================================
+   Tutor House — Colors & Type
+   Source of truth: /assingment-4-frontend/src/app/globals.css (shadcn/ui
+   New York preset, neutral baseColor, OKLCH tokens) plus the project's
+   signature gradient (violet → fuchsia → blue) used across navbar, hero,
+   buttons, and login/signup cards.
+   ===================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* ---------- Brand gradient stops ---------- */
+  --th-violet-600: #7c3aed;
+  --th-purple-600: #9333ea;
+  --th-fuchsia-600: #c026d3;
+  --th-pink-600:   #db2777;
+  --th-blue-600:   #2563eb;
+  --th-indigo-600: #4f46e5;
+
+  /* The signature 3-stop gradient (purple → pink → blue) used in
+     the hero "Tutor House" wordmark, navbar logo, and CTA buttons. */
+  --th-brand-gradient: linear-gradient(
+    to right,
+    #2563eb 0%, /* blue-600 */
+    #9333ea 50%, /* purple-600 */
+    #db2777 100% /* pink-600 */
+  );
+
+  /* Alt 2-stop used on signup/booking cards */
+  --th-cta-gradient: linear-gradient(
+    to right,
+    #4f46e5, /* indigo-600 */
+    #9333ea  /* purple-600 */
+  );
+
+  /* Soft hero background gradient (slate → purple → blue tints) */
+  --th-hero-bg: linear-gradient(
+    to bottom right,
+    #f8fafc, /* slate-50 */
+    #faf5ff, /* purple-50 */
+    #eff6ff  /* blue-50 */
+  );
+
+  /* ---------- shadcn neutral OKLCH tokens (light) ---------- */
+  --th-radius: 0.625rem; /* base radius — md = 8px, lg = 10px, xl = 14px */
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);                 /* near-black */
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);    /* red-600 */
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+
+  /* Charts — left intact from shadcn defaults */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Sidebar */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ---------- Semantic shorthand ---------- */
+  --fg-1: var(--foreground);
+  --fg-2: oklch(0.42 0 0);
+  --fg-muted: var(--muted-foreground);
+  --bg-1: var(--background);
+  --bg-2: var(--secondary);
+
+  /* ---------- Type ---------- */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas,
+               "Liberation Mono", monospace;
+
+  /* Display / heading sizes — calibrated to hero (text-9xl ≈ 128px)
+     and section h2 (~48–60px) seen on Home + About. */
+  --text-display-xl: 7rem;   /* 112px — hero "Tutor House" desktop */
+  --text-display-lg: 4.5rem; /* 72px — section hero */
+  --text-display-md: 3rem;   /* 48px — section h2 */
+  --text-h1: 3rem;
+  --text-h2: 2.25rem;
+  --text-h3: 1.5rem;
+  --text-h4: 1.25rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.75rem;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --tracking-tight: -0.02em;
+  --tracking-tighter: -0.04em;
+  --tracking-wide: 0.02em;
+
+  /* ---------- Radius scale (matches shadcn calc) ---------- */
+  --radius-sm: calc(var(--th-radius) - 4px); /* 6px */
+  --radius-md: calc(var(--th-radius) - 2px); /* 8px */
+  --radius-lg: var(--th-radius);             /* 10px */
+  --radius-xl: calc(var(--th-radius) + 4px); /* 14px — buttons "rounded-xl" */
+  --radius-2xl: calc(var(--th-radius) + 8px);/* 18px — cards "rounded-2xl" */
+  --radius-3xl: calc(var(--th-radius) + 12px);/* 22px — auth cards */
+  --radius-pill: 9999px;
+
+  /* ---------- Shadow scale ---------- */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.10), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 10px 22px -4px rgb(0 0 0 / 0.12), 0 4px 8px -4px rgb(0 0 0 / 0.08);
+  --shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.18);
+  --shadow-2xl: 0 28px 60px -12px rgb(0 0 0 / 0.28);
+  /* Brand-tinted shadow under purple CTAs */
+  --shadow-purple: 0 12px 30px -6px rgba(147, 51, 234, 0.45);
+  --shadow-indigo: 0 12px 30px -6px rgba(79, 70, 229, 0.40);
+
+  /* ---------- Spacing scale (Tailwind defaults; copied for reference) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+}
+
+/* ============================================================
+   Semantic typography roles
+   ============================================================ */
+body, .th-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.th-display {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-black);
+  font-size: var(--text-display-xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.th-h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.th-h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.th-h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+}
+
+.th-h4 {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+}
+
+.th-body-lg {
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.th-body-sm,
+.th-muted {
+  font-size: var(--text-body-sm);
+  color: var(--fg-muted);
+}
+
+.th-eyebrow {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--th-purple-600);
+}
+
+.th-mono,
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+/* ============================================================
+   Brand gradient text utility
+   ============================================================ */
+.th-grad-text {
+  background: var(--th-brand-gradient);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}

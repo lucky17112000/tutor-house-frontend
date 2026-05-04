@@ -1,349 +1,277 @@
 "use client";
 
-import { Book, Menu, Sunset, Trees, Zap, LogIn, UserPlus } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { ModeToggle } from "../ModeChange/ModeToggle";
+import { authClient } from "@/lib/auth-client";
 
-interface MenuItem {
-  title: string;
-  url: string;
-  description?: string;
-  icon?: React.ReactNode;
-  items?: MenuItem[];
-}
+const NAV_LINKS = [
+  { label: "Tutors", href: "/tutor" },
+  { label: "Contact", href: "/contact" },
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Terms", href: "/terms" },
+  { label: "Privacy", href: "/privacy" },
+];
 
-interface Navbar1Props {
-  className?: string;
-  logo?: {
-    url: string;
-    src: string;
-    alt: string;
-    title: string;
-    className?: string;
-  };
-  menu?: MenuItem[];
-  auth?: {
-    login: {
-      title: string;
-      url: string;
-    };
-    signup: {
-      title: string;
-      url: string;
-    };
-  };
-}
+const MORE_LINKS = [
+  { label: "About us", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Reviews", href: "/review" },
+];
 
-const Navbar1 = ({
-  logo = {
-    url: "/",
-    src: "",
-    alt: "logo",
-    title: "Tutor House",
-  },
-  menu = [
-    { title: "Home", url: "/" },
-    {
-      title: "Products",
-      url: "#",
-      items: [
-        {
-          title: "Blog",
-          description: "The latest industry news, updates, and info",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Company",
-          description: "Our mission is to innovate and empower the world",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Careers",
-          description: "Browse job listing and discover our workspace",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Support",
-          description:
-            "Get in touch with our support team or visit our community forums",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
-    },
+const Navbar1 = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const router = useRouter();
+  const session = authClient.useSession();
+  const isLoggedIn = Boolean(session.data?.user);
 
-    {
-      title: "Tutors",
-      url: "/tutor",
-    },
-    {
-      title: "About Us",
-      url: "/about",
-    },
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-    },
-  ],
-  auth = {
-    login: { title: "Login", url: "/login" },
-    signup: { title: "Sign up", url: "/signup" },
-  },
-  className,
-}: Navbar1Props) => {
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <section
-      className={cn(
-        "py-4 sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border/40 shadow-sm",
-        className,
-      )}
-    >
-      <div className="container mx-auto px-6 lg:px-10">
-        {/* Desktop Menu */}
-        <nav className="hidden items-center justify-between lg:flex">
-          <div className="flex items-center gap-8">
-            {/* Fancy Logo */}
-            <Link
-              href={logo.url}
-              className="group flex items-center gap-2 relative"
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-400 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+          scrolled
+            ? "px-12 py-3.5 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-black/6 dark:border-white/6 shadow-[0_8px_30px_-8px_rgba(10,10,10,0.08)]"
+            : "px-12 py-5.5 bg-transparent border-b border-transparent"
+        }`}
+      >
+        {/* Brand */}
+        <Link
+          href="/"
+          className="group flex items-center gap-2.5 font-extrabold text-[22px] tracking-[-0.03em]"
+        >
+          <span className="w-8 h-8 bg-blue-700 rounded-lg grid place-items-center text-white font-black text-base tracking-[-0.05em] shrink-0 transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110">
+            T
+          </span>
+          <span
+            className={`transition-colors duration-400 ${
+              scrolled ? "text-zinc-900 dark:text-white" : "text-white"
+            }`}
+          >
+            tutorhouse
+          </span>
+        </Link>
+
+        {/* Desktop Links */}
+        <ul className="hidden lg:flex items-center gap-1 list-none">
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`group relative px-4 py-2.5 text-[14.5px] font-medium rounded-lg transition-colors duration-300 ${
+                  scrolled
+                    ? "text-zinc-700 dark:text-zinc-300 hover:text-blue-700 dark:hover:text-blue-400"
+                    : "text-white/90 hover:text-white"
+                }`}
+              >
+                {link.label}
+                <span
+                  className={`absolute bottom-1.5 left-4 right-4 h-0.5 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left ${
+                    scrolled ? "bg-blue-700 dark:bg-blue-400" : "bg-white"
+                  }`}
+                />
+              </Link>
+            </li>
+          ))}
+          <li
+            className="relative"
+            onMouseEnter={() => setMoreOpen(true)}
+            onMouseLeave={() => setMoreOpen(false)}
+          >
+            <button
+              type="button"
+              onClick={() => setMoreOpen((v) => !v)}
+              onFocus={() => setMoreOpen(true)}
+              className={`group inline-flex items-center gap-1.5 px-4 py-2.5 text-[14.5px] font-medium rounded-lg transition-colors duration-300 ${
+                scrolled
+                  ? "text-zinc-700 dark:text-zinc-300 hover:text-blue-700 dark:hover:text-blue-400"
+                  : "text-white/90 hover:text-white"
+              }`}
+              aria-haspopup="menu"
+              aria-expanded={moreOpen}
             >
-              <span className="text-3xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-300% tracking-tight hover:scale-105 transition-transform duration-300">
-                Tutor House
-              </span>
-              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 group-hover:w-full transition-all duration-500"></div>
-            </Link>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
+              More
+              <ChevronDown
+                className={`size-4 transition-transform duration-300 ${
+                  moreOpen ? "rotate-180" : "rotate-0"
+                }`}
+              />
+            </button>
+            {moreOpen && (
+              <div
+                className={`absolute right-0 mt-2 w-44 rounded-xl border shadow-lg overflow-hidden ${
+                  scrolled
+                    ? "bg-white/95 dark:bg-zinc-900/95 border-black/10 dark:border-white/15"
+                    : "bg-white/95 dark:bg-zinc-900/95 border-black/10 dark:border-white/15"
+                }`}
+                role="menu"
+              >
+                {MORE_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMoreOpen(false)}
+                    className="block px-4 py-2.5 text-[14px] font-medium text-zinc-700 hover:text-blue-700 hover:bg-zinc-50 dark:text-zinc-100 dark:hover:text-blue-300 dark:hover:bg-zinc-800 transition-colors"
+                    role="menuitem"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </li>
+        </ul>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-2">
+          <ModeToggle />
+
+          {!isLoggedIn ? (
+            <>
+              <Link
+                href="/login"
+                className={`hidden lg:inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  scrolled
+                    ? "text-zinc-700 dark:text-zinc-300 hover:text-blue-700 dark:hover:text-blue-400"
+                    : "text-white/90 hover:text-white"
+                }`}
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/signup"
+                className={`hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[14.5px] font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 hover:text-white hover:shadow-[0_14px_28px_-8px_rgba(29,78,216,0.55)] ${
+                  scrolled
+                    ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900"
+                    : "bg-white text-zinc-900"
+                }`}
+              >
+                Get started
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M2 7h10M8 3l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={async () => {
+                await authClient.signOut();
+                router.push("/");
+              }}
+              className={`hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[14.5px] font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 hover:text-white hover:shadow-[0_14px_28px_-8px_rgba(29,78,216,0.55)] ${
+                scrolled
+                  ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900"
+                  : "bg-white text-zinc-900"
+              }`}
+            >
+              Logout
+            </button>
+          )}
+
+          {/* Mobile hamburger */}
+          <button
+            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
+              scrolled
+                ? "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                : "text-white hover:bg-white/10"
+            }`}
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40 flex flex-col pt-16 lg:hidden">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div className="relative bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 px-6 py-6 flex flex-col gap-1">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-[15px] font-medium text-zinc-800 dark:text-zinc-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="mt-2 px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
+              More
+            </div>
+            {MORE_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-[15px] font-medium text-zinc-800 dark:text-zinc-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="flex gap-2 mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+              {!isLoggedIn ? (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 text-center px-4 py-2.5 rounded-full text-sm font-semibold border-2 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-blue-700 hover:text-blue-700 transition-all"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 text-center px-4 py-2.5 rounded-full text-sm font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-blue-700 dark:hover:bg-blue-600 dark:hover:text-white transition-all"
+                  >
+                    Get started
+                  </Link>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await authClient.signOut();
+                    setMobileOpen(false);
+                    router.push("/");
+                  }}
+                  className="flex-1 text-center px-4 py-2.5 rounded-full text-sm font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-blue-700 dark:hover:bg-blue-600 dark:hover:text-white transition-all"
+                >
+                  Logout
+                </button>
+              )}
             </div>
           </div>
-          {/* Auth Buttons - Desktop */}
-          <div className="flex gap-3">
-            {/* Login Button */}
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="relative overflow-hidden group border-2 hover:border-purple-500 transition-all duration-300"
-            >
-              <Link
-                href={auth.login.url}
-                className="relative z-10 flex items-center gap-2"
-              >
-                <LogIn className="size-4" />
-                <span className="group-hover:text-purple-600 transition-colors duration-300">
-                  {auth.login.title}
-                </span>
-              </Link>
-            </Button>
-            {/* Signup Button */}
-            <Button
-              asChild
-              size="sm"
-              className="relative overflow-hidden group bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
-            >
-              <Link
-                href={auth.signup.url}
-                className="relative z-10 flex items-center gap-2"
-              >
-                <UserPlus className="size-4" />
-                {auth.signup.title}
-              </Link>
-            </Button>
-            <ModeToggle />
-          </div>
-        </nav>
-
-        {/* Mobile Menu */}
-        <div className="block lg:hidden">
-          <div className="flex items-center justify-between ">
-            {/* Fancy Logo Mobile */}
-            <Link href={logo.url} className="flex items-center gap-2 ">
-              <span className="text-2xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-300% tracking-tight ">
-                Tutor House
-              </span>
-            </Link>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="hover:scale-110 transition-transform duration-300 hover:border-purple-500"
-                >
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="overflow-y-auto backdrop-blur-xl bg-background/95">
-                <SheetHeader>
-                  <SheetTitle>
-                    <Link href={logo.url} className="flex items-center gap-2">
-                      <span className="text-2xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-300% tracking-tight">
-                        Tutor House
-                      </span>
-                    </Link>
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-4"
-                  >
-                    {menu.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
-
-                  {/* Auth Buttons - Mobile */}
-                  <div className="flex flex-col gap-3">
-                    {/* Login Button */}
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-2 hover:border-purple-500 hover:text-purple-600 transition-all duration-300"
-                    >
-                      <Link
-                        href={auth.login.url}
-                        className="flex items-center gap-2"
-                      >
-                        <LogIn className="size-4" />
-                        {auth.login.title}
-                      </Link>
-                    </Button>
-                    {/* Signup Button */}
-                    <Button
-                      asChild
-                      className="bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-                    >
-                      <Link
-                        href={auth.signup.url}
-                        className="flex items-center gap-2"
-                      >
-                        <UserPlus className="size-4" />
-                        {auth.signup.title}
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
         </div>
-      </div>
-    </section>
-  );
-};
-
-const renderMenuItem = (item: MenuItem) => {
-  if (item.items) {
-    return (
-      <NavigationMenuItem key={item.title}>
-        <NavigationMenuTrigger className="group relative hover:text-purple-600 transition-colors duration-300">
-          {item.title}
-          <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 group-hover:w-full transition-all duration-300"></div>
-        </NavigationMenuTrigger>
-        <NavigationMenuContent className="bg-popover/95 backdrop-blur-xl text-popover-foreground border border-border/50 shadow-xl animate-in fade-in-0 zoom-in-95">
-          {item.items.map((subItem) => (
-            <NavigationMenuLink asChild key={subItem.title} className="w-80">
-              <SubMenuLink item={subItem} />
-            </NavigationMenuLink>
-          ))}
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    );
-  }
-
-  return (
-    <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink asChild>
-        <Link
-          href={item.url}
-          className="group relative inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-all duration-300 hover:text-purple-600 hover:scale-105"
-        >
-          {item.title}
-          <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 group-hover:w-full transition-all duration-300"></div>
-        </Link>
-      </NavigationMenuLink>
-    </NavigationMenuItem>
-  );
-};
-
-const renderMobileMenuItem = (item: MenuItem) => {
-  if (item.items) {
-    return (
-      <AccordionItem key={item.title} value={item.title} className="border-b-0">
-        <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline hover:text-purple-600 transition-colors duration-300">
-          {item.title}
-        </AccordionTrigger>
-        <AccordionContent className="mt-2">
-          {item.items.map((subItem) => (
-            <SubMenuLink key={subItem.title} item={subItem} />
-          ))}
-        </AccordionContent>
-      </AccordionItem>
-    );
-  }
-
-  return (
-    <Link
-      key={item.title}
-      href={item.url}
-      className="text-md font-semibold hover:text-purple-600 transition-colors duration-300 hover:translate-x-1 inline-block"
-    >
-      {item.title}
-    </Link>
-  );
-};
-
-const SubMenuLink = ({ item }: { item: MenuItem }) => {
-  return (
-    <Link
-      className="flex min-w-80 flex-row gap-4 rounded-lg p-4 leading-none no-underline transition-all duration-300 outline-none select-none hover:bg-linear-to-r hover:from-purple-50 hover:via-pink-50 hover:to-blue-50 dark:hover:from-purple-950/30 dark:hover:via-pink-950/30 dark:hover:to-blue-950/30 hover:shadow-md hover:scale-[1.02] group border border-transparent hover:border-purple-200 dark:hover:border-purple-800"
-      href={item.url}
-    >
-      <div className="text-foreground group-hover:text-purple-600 transition-colors duration-300 group-hover:scale-110 transform">
-        {item.icon}
-      </div>
-      <div className="flex-1">
-        <div className="text-sm font-semibold group-hover:text-purple-600 transition-colors duration-300">
-          {item.title}
-        </div>
-        {item.description && (
-          <p className="text-sm leading-snug text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
-            {item.description}
-          </p>
-        )}
-      </div>
-    </Link>
+      )}
+    </>
   );
 };
 

@@ -3,7 +3,10 @@ import { env } from "@/env";
 import { cookies } from "next/headers";
 
 // Using process.env directly to avoid z.url() crash with localhost URLs
-const API_URL = process.env.API_URL ?? "http://localhost:4000/";
+const API_URL = (process.env.API_URL ?? "http://localhost:4000").replace(
+  /\/$/,
+  "",
+);
 
 const MY_URL = env.AUTH_URL ?? "http://localhost:4000";
 
@@ -160,8 +163,9 @@ export const getTutorBookings = async () => {
       headers: {
         "Content-Type": "application/json",
         Cookie: cookieStore.toString(),
+        Authorization: `Bearer ${token}`,
       },
-      next: { revalidate: 10 },
+      cache: "no-store",
     });
     const contentType = response.headers.get("content-type");
     if (!contentType?.includes("application/json")) {

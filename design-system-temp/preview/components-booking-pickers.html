@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{margin:0;padding:24px;background:#fafafa;font-family:var(--font-sans)}
+.label{font:600 11px var(--font-sans);letter-spacing:.04em;text-transform:uppercase;color:#6b7280;margin-bottom:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.day{display:flex;flex-direction:column;align-items:center;padding:10px 14px;border-radius:14px;border:2px solid #e4e4e7;background:#fff;cursor:pointer;min-width:84px}
+.day .d{font:700 13px var(--font-sans);color:#3f3f46}
+.day .dt{font:400 11px var(--font-sans);color:#71717a;margin-top:2px}
+.day.active{border-color:#4f46e5;background:#eef2ff;box-shadow:0 4px 8px rgba(79,70,229,.15)}
+.day.active .d{color:#4338ca}
+.slot{flex:1;min-width:120px;display:flex;flex-direction:column;align-items:center;padding:10px;border:2px solid #e4e4e7;border-radius:14px;background:#fff;position:relative}
+.slot.active{border-color:#4f46e5;background:#eef2ff;box-shadow:0 8px 18px -6px rgba(79,70,229,.3)}
+.slot .lbl2{font:400 10px var(--font-sans);color:#71717a}
+.slot .t{font:700 16px var(--font-sans);color:#27272a}
+.slot.active .t{color:#4338ca}
+.check{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#4f46e5;color:#fff;font:700 11px var(--font-sans);display:flex;align-items:center;justify-content:center}
+.tag{margin-top:4px;font:700 10px var(--font-sans);color:#4338ca;background:#e0e7ff;padding:2px 8px;border-radius:999px}
+</style></head><body>
+<div class="label">Booking — day picker + time slot picker</div>
+<div class="row">
+  <div class="day"><div class="d">Saturday</div><div class="dt">Nov 9</div></div>
+  <div class="day active"><div class="d">Monday</div><div class="dt">Nov 11</div></div>
+  <div class="day"><div class="d">Wednesday</div><div class="dt">Nov 13</div></div>
+</div>
+<div style="height:14px"></div>
+<div class="row">
+  <div class="slot"><div class="lbl2">Start</div><div class="t">14:00</div><div class="lbl2" style="margin-top:2px">End</div><div class="t">15:00</div><div class="tag">$45</div></div>
+  <div class="slot active"><div class="check">✓</div><div class="lbl2">Start</div><div class="t">16:00</div><div class="lbl2" style="margin-top:2px">End</div><div class="t">17:00</div><div class="tag">$45</div></div>
+</div>
+</body></html>

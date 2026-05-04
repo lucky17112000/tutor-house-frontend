@@ -1,0 +1,144 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+  body {
+    margin: 0;
+    padding: 40px 24px;
+    background: #1a1a1a;
+    font-family: var(--font-sans);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  .label {
+    font: 600 11px var(--font-sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a1a1aa;
+    margin-bottom: 20px;
+  }
+
+  /* HOVER label that appears above the card */
+  .stage {
+    position: relative;
+    padding-top: 56px;
+  }
+  .hover-tag {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font: 800 28px/1 var(--font-sans);
+    letter-spacing: 0.18em;
+    color: transparent;
+    -webkit-text-stroke: 2px #ffffff;
+    text-stroke: 2px #ffffff;
+    opacity: 0.92;
+    pointer-events: none;
+    user-select: none;
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), opacity 0.4s ease;
+  }
+  .stage:hover .hover-tag {
+    transform: translateX(-50%) translateY(-6px);
+    opacity: 1;
+  }
+
+  /* Card */
+  .card {
+    width: 240px;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 24px 48px -16px rgba(0,0,0,0.5),
+                0 8px 16px -8px rgba(0,0,0,0.35);
+    transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1),
+                box-shadow 0.5s ease;
+    isolation: isolate;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 32px 60px -16px rgba(0,0,0,0.6),
+                0 12px 20px -8px rgba(0,0,0,0.4);
+  }
+
+  /* Photo */
+  .card-img {
+    width: 100%;
+    height: 320px;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .card:hover .card-img {
+    transform: scale(1.06);
+  }
+
+  /* Green tinted overlay */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+                  rgba(132, 204, 22, 0.55) 0%,
+                  rgba(101, 163, 13, 0.65) 35%,
+                  rgba(74, 124, 12, 0.85) 70%,
+                  rgba(54, 90, 8, 0.95) 100%);
+    mix-blend-mode: multiply;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .card:hover::before { opacity: 0.85; }
+
+  /* Body content */
+  .card-body {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 22px 22px 24px;
+    color: #ffffff;
+    z-index: 2;
+  }
+  .card-heading {
+    font: 700 26px/1.1 var(--font-sans);
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .card-text {
+    font: 400 13px/1.5 var(--font-sans);
+    color: rgba(255,255,255,0.9);
+    margin: 0 0 18px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .card-btn {
+    display: inline-block;
+    background: #ffffff;
+    color: #2d4a09;
+    font: 600 13px var(--font-sans);
+    padding: 9px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .card-btn:hover {
+    transform: translateY(-1px);
+    background: #f0fdf4;
+  }
+</style></head><body>
+
+<div class="label">Tutor card · hover variant</div>
+
+<div class="stage">
+  <div class="hover-tag">HOVER</div>
+  <div class="card">
+    <img class="card-img" src="https://images.unsplash.com/photo-1519452575417-564c1401ecc0?w=600&q=80" alt="">
+    <div class="card-body">
+      <h3 class="card-heading">Heading</h3>
+      <p class="card-text">Lorem Ipsum is simply dummy text from the printing and typesetting industry</p>
+      <a class="card-btn" href="#">Read More</a>
+    </div>
+  </div>
+</div>
+
+</body></html>

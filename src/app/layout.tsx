@@ -29,6 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <link rel="mask-icon" href="/favicon.svg" color="#0ea5e9" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="icon" href="/favicon-192.svg" sizes="192x192" />
+        <link rel="icon" href="/favicon-512.svg" sizes="512x512" />
+        <meta name="theme-color" content="#0ea5e9" />
+        <meta name="msapplication-TileColor" content="#0ea5e9" />
+      </head>
       <body
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

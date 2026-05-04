@@ -148,3 +148,85 @@ export const completeBooking = async (bookingId: string) => {
     return { error: "Could not connect to backend." };
   }
 };
+
+//http://localhost:4000/api/reviews
+// show all student booking theke tutor ta ke alda korbo then i have to show all tutor another page then in this page i have a button create review ....
+export const leaveRevview = async (
+  tutorId: string,
+  rating: number,
+  comment: string,
+) => {
+  try {
+    const cookieStore = await cookies();
+    const token = getSessionToken(cookieStore);
+    if (!token) {
+      return { error: "No session token found. Please login first." };
+    }
+    const response = await fetch(`${API_URL}/api/reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify({ tutorId, rating, comment }),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      return { error: result?.message || `Server returned ${response.status}` };
+    }
+    return result;
+  } catch (error) {
+    console.error(" Error leaving review:", error);
+    return { error: "Could not connect to backend." };
+  }
+};
+//http://localhost:4000/api/reviews
+//show all review of tutor another page
+export const getAllReviews = async () => {
+  try {
+    const cookieStore = await cookies();
+    const token = getSessionToken(cookieStore);
+    if (!token) {
+      return { error: "No session token found. Please login first." };
+    }
+    const response = await fetch(`${API_URL}/api/reviews`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      return { error: result?.message || `Server returned ${response.status}` };
+    }
+    return result;
+  } catch (error) {
+    console.error(" Error fetching reviews:", error);
+    return { error: "Could not connect to backend." };
+  }
+};
+//http://localhost:4000/api/reviews/tutor/907b80e4-88d6-44cb-a031-4a0ed83b5821
+// tutor id need
+export const getReviewsByTutorId = async (tutorId: string) => {
+  try {
+    const cookieStore = await cookies();
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    const token = getSessionToken(cookieStore);
+    if (token) headers["Cookie"] = cookieStore.toString();
+
+    const response = await fetch(`${API_URL}/api/reviews/tutor/${tutorId}`, {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      return { error: result?.message || `Server returned ${response.status}` };
+    }
+    return result;
+  } catch (error) {
+    console.error(" Error fetching reviews by tutor ID:", error);
+    return { error: "Could not connect to backend." };
+  }
+};
