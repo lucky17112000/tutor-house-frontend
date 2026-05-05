@@ -80,14 +80,14 @@ export default async function StudentProfile() {
 
         <div className="px-7 pb-7">
           {/* Avatar row */}
-          <div className="flex items-end gap-5 -mt-10 mb-5">
+          <div className="flex items-start gap-5 mb-5">
             <div
-              className="w-20 h-20 rounded-2xl border-4 border-white dark:border-zinc-900 grid place-items-center text-white font-black text-2xl shadow-lg shrink-0"
+              className="-mt-10 w-20 h-20 rounded-2xl border-4 border-white dark:border-zinc-900 grid place-items-center text-white font-black text-2xl shadow-lg shrink-0"
               style={{ background: "linear-gradient(135deg,#059669,#0ea5e9)" }}
             >
               {initials}
             </div>
-            <div className="pb-1 min-w-0">
+            <div className="pt-2 min-w-0">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 mb-1">
                 <BookMarked className="size-3" /> Student
               </span>

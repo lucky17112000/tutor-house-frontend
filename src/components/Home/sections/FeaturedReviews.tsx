@@ -123,7 +123,7 @@ export default function FeaturedReviews() {
 
         {/* ── Featured big quote ── */}
         <div
-          className="relative rounded-3xl overflow-hidden text-white p-10 sm:p-14 text-center"
+          className="relative rounded-3xl overflow-hidden text-white p-6 sm:p-10 md:p-14 text-center"
           style={{ background: "linear-gradient(135deg,#0a0a0a 0%,#1d4ed8 60%,#2563eb 100%)" }}
         >
           {/* Decorative blurs */}

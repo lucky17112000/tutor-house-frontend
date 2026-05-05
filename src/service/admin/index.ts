@@ -207,6 +207,28 @@ export const deleteUser = async (userId: string) => {
     return { error: "Could not connect to backend." };
   }
 };
+// DELETE /api/admin/bookings/:bookingId — hard-delete a single booking
+export const deleteBooking = async (bookingId: string) => {
+  const cokkieStore = await cookies();
+  const token = getSessionToken(cokkieStore);
+  if (!token) return { error: "No session token found. Please login first." };
+  try {
+    const response = await fetch(`${AUTH_URL}/api/admin/bookings/${bookingId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cokkieStore.toString(),
+      },
+    });
+    if (response.status === 401) return { error: "Unauthorized. You do not have admin access." };
+    const text = await response.text();
+    return text ? JSON.parse(text) : { success: true };
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    return { error: "Could not connect to backend." };
+  }
+};
+
 // http://localhost:4000/admin/users/:userid/tutor-profile
 //delete tutor profile by user id (admin)
 //eta add kore dibo manage booking er modhye, jekhane admin user list theke ekjon tutor select kore tar profile delete korte parbe. eta korar jonno amader backend e already route ta ache, just frontend theke call korte hobe.

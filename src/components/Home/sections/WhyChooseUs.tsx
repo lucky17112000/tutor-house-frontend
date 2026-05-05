@@ -119,7 +119,7 @@ export default function WhyChooseUs() {
           {FEATURES.map((feature, i) => (
             <div
               key={feature.title}
-              className="group bg-white rounded-2xl p-7 border border-white hover:border-blue-200 hover:shadow-[0_20px_40px_-12px_rgba(29,78,216,0.12)] transition-all duration-300 hover:-translate-y-1"
+              className="group bg-white rounded-2xl p-5 md:p-7 border border-white hover:border-blue-200 hover:shadow-[0_20px_40px_-12px_rgba(29,78,216,0.12)] transition-all duration-300 hover:-translate-y-1"
             >
               {/* Icon */}
               <div

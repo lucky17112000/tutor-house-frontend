@@ -90,17 +90,14 @@ const SOCIALS = [
 export function Footer2() {
   return (
     <footer
-      className="text-white"
-      style={{ background: "#0a0a0a", padding: "96px 48px 36px" }}
+      className="text-white pt-14 pb-9 px-6 sm:px-10 md:px-14 lg:pt-24 lg:pb-9 lg:px-16"
+      style={{ background: "#0a0a0a" }}
     >
       <div className="mx-auto" style={{ maxWidth: 1280 }}>
         {/* Grid */}
-        <div
-          className="grid gap-12 mb-18"
-          style={{ gridTemplateColumns: "1.4fr 1fr 1fr 1fr 1fr" }}
-        >
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-8 sm:gap-10 lg:gap-12 mb-12 lg:mb-18">
           {/* Brand column */}
-          <div>
+          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
             <div className="flex items-center gap-3 mb-5">
               <div
                 className="grid place-items-center text-white font-black tracking-[-0.05em] shrink-0"

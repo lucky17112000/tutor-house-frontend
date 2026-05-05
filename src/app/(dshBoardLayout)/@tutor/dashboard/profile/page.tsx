@@ -93,14 +93,14 @@ export default async function TutorProfile() {
 
         <div className="px-7 pb-7">
           {/* Avatar row */}
-          <div className="flex items-end gap-5 -mt-10 mb-5">
+          <div className="flex items-start gap-5 mb-5">
             <div
-              className="w-20 h-20 rounded-2xl border-4 border-white dark:border-zinc-900 grid place-items-center text-white font-black text-2xl shadow-lg shrink-0"
+              className="-mt-10 w-20 h-20 rounded-2xl border-4 border-white dark:border-zinc-900 grid place-items-center text-white font-black text-2xl shadow-lg shrink-0"
               style={{ background: "linear-gradient(135deg,#1d4ed8,#7c3aed)" }}
             >
               {initials}
             </div>
-            <div className="pb-1 min-w-0">
+            <div className="pt-2 min-w-0">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 mb-1">
                 <Star className="size-3" /> Tutor
               </span>

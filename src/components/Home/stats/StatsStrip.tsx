@@ -55,10 +55,10 @@ export default function StatsStrip() {
   }, []);
 
   return (
-    <section ref={ref} className="py-22 px-12 max-sm:px-6" style={{ background: "#0a0a0a" }}>
+    <section ref={ref} className="py-24 px-6 md:px-12" style={{ background: "#0a0a0a" }}>
       <div
-        className="mx-auto grid gap-8 max-sm:grid-cols-2"
-        style={{ maxWidth: 1280, gridTemplateColumns: "repeat(4, 1fr)" }}
+        className="mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+        style={{ maxWidth: 1280 }}
       >
         {STATS.map((stat, i) => (
           <div

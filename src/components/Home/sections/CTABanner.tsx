@@ -17,7 +17,7 @@ export default function CTABanner() {
 
   return (
     <section
-      className="mx-6 mb-0 rounded-[28px] overflow-hidden relative"
+      className="mx-3 sm:mx-6 mb-0 rounded-[28px] overflow-hidden relative"
       style={{ background: "#1d4ed8" }}
     >
       {/* Decorative radial glows */}
@@ -31,7 +31,7 @@ export default function CTABanner() {
       />
 
       <div
-        className="relative grid grid-cols-1 md:grid-cols-2 gap-14 items-center px-12 py-20 max-sm:px-8 max-sm:py-14"
+        className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center px-6 py-12 sm:px-10 sm:py-16 md:px-12 md:py-20"
       >
         {/* Left — text */}
         <div>

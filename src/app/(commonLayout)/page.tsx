@@ -37,7 +37,7 @@ export default function Home() {
       <SubjectCategories />
 
       {/* 8 ── Featured tutors: continuous right-to-left image carousel */}
-      <section className="py-20 px-6 bg-white dark:bg-zinc-950">
+      <section className="py-24 px-6 bg-white dark:bg-zinc-950">
         <div className="max-w-295 mx-auto">
           <div className="mb-10">
             <div
@@ -85,7 +85,7 @@ export default function Home() {
       <Testimonials />
 
       {/* 9 ── CTA Banner: blue, email form */}
-      <section className="py-20 bg-white dark:bg-zinc-950">
+      <section className="py-24 bg-white dark:bg-zinc-950">
         <CTABanner />
       </section>
 

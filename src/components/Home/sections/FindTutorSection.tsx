@@ -180,16 +180,17 @@ export default function FindTutorSection() {
       {/* ════════════════════════════════════════════
           HERO — blue block + photo + chip + marquee
           ════════════════════════════════════════════ */}
-      <section className="relative bg-white dark:bg-zinc-950 pt-16 pb-0 px-6">
-        <div
-          className="max-w-295 mx-auto grid items-stretch"
-          style={{ gridTemplateColumns: "1.05fr 1fr", minHeight: 620 }}
-        >
+      <section className="relative bg-white dark:bg-zinc-950 py-24 px-6">
+        <div className="max-w-295 mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] items-stretch">
           {/* ── Blue block ── */}
           <div
-            className="relative z-20 bg-blue-700 text-white flex flex-col justify-center px-16 py-18 rounded-sm shadow-[0_40px_80px_-20px_rgba(29,78,216,0.35)] overflow-hidden animate-hero-block"
-            style={{ marginTop: 40, marginBottom: 40 }}
+            className="relative z-20 rounded-sm animate-hero-block lg:mt-10 lg:mb-10"
+            style={{
+              boxShadow:
+                "0 0 0 1px rgba(29,78,216,0.15), 0 8px 24px -4px rgba(29,78,216,0.4), 0 32px 64px -12px rgba(29,78,216,0.55), 0 60px 120px -24px rgba(29,78,216,0.3)",
+            }}
           >
+          <div className="relative bg-blue-700 text-white flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-16 lg:py-18 rounded-sm overflow-hidden h-full">
             {/* Inner glows */}
             <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/18 blur-3xl pointer-events-none" />
             <div className="absolute -bottom-14 -left-14 w-52 h-52 rounded-full bg-white/10 blur-3xl pointer-events-none" />
@@ -252,11 +253,11 @@ export default function FindTutorSection() {
               </Link>
             </div>
           </div>
+          </div>
 
           {/* ── Photo ── */}
           <div
-            className="relative z-10 rounded-sm overflow-hidden animate-hero-photo"
-            style={{ minHeight: 620 }}
+            className="relative z-10 rounded-sm overflow-hidden animate-hero-photo h-64 sm:h-80 lg:min-h-155"
           >
             <Image
               src="/images/pexels-thisisengineering-3862130.jpg"
@@ -311,7 +312,7 @@ export default function FindTutorSection() {
       {/* ════════════════════════════════════════════
           CARDS — 3-D parallax tilt
           ════════════════════════════════════════════ */}
-      <section className="bg-white dark:bg-zinc-950 px-6 py-28">
+      <section className="bg-white dark:bg-zinc-950 px-6 py-24">
         {/* Header */}
         <div className="max-w-295 mx-auto flex items-end justify-between gap-12 flex-wrap mb-16">
           <div className="max-w-160">
@@ -335,8 +336,8 @@ export default function FindTutorSection() {
 
         {/* Cards grid */}
         <div
-          className="max-w-295 mx-auto grid gap-7"
-          style={{ gridTemplateColumns: "repeat(3, 1fr)", perspective: 1200 }}
+          className="max-w-295 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"
+          style={{ perspective: 1200 }}
         >
           <TiltCard
             tag="01 · Live"

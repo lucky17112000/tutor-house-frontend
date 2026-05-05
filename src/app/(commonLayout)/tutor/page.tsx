@@ -18,7 +18,7 @@ const TutorPage = async ({
   return (
     <div className="min-h-screen">
       {/* Page header */}
-      <div className="pt-28 pb-10 px-12">
+      <div className="pt-24 pb-8 px-4 sm:px-6 md:px-12 sm:pt-28 sm:pb-10">
         <p className="text-xs uppercase tracking-[0.22em] text-indigo-600 dark:text-indigo-400 font-semibold mb-3">
           Find your tutor
         </p>
@@ -31,7 +31,7 @@ const TutorPage = async ({
       </div>
 
       {/* Grid */}
-      <div className="px-12">
+      <div className="px-4 sm:px-6 md:px-12">
         {Array.isArray(tutors) && tutors.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <div className="text-5xl mb-4">🔍</div>
@@ -49,7 +49,7 @@ const TutorPage = async ({
 
       {/* Pagination — only render when there is more than one page */}
       {pagination && pagination.totalPages > 1 && (
-        <div className="mt-10 mb-16 px-12">
+        <div className="mt-10 mb-16 px-4 sm:px-6 md:px-12">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl py-3.5 shadow-sm">
             <Suspense>
               <PaginationControles meta={pagination} />

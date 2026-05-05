@@ -1,5 +1,6 @@
 import { getAllBookings } from "@/service/admin";
 import AdminCancelAllButton from "@/components/booking/AdminCancelAllButton";
+import AdminDeleteBookingButton from "@/components/booking/AdminDeleteBookingButton";
 import React from "react";
 
 export const dynamic = "force-dynamic";
@@ -144,6 +145,14 @@ const AdminBookingManage = async () => {
                         ৳{booking.price}
                       </span>
                     </div>
+                  </div>
+
+                  {/* Footer — delete */}
+                  <div className="px-5 pb-4 flex justify-end border-t border-gray-100 dark:border-zinc-700 pt-3">
+                    <AdminDeleteBookingButton
+                      bookingId={booking.id}
+                      studentName={studentName}
+                    />
                   </div>
                 </div>
               );

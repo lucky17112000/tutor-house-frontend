@@ -151,7 +151,7 @@ export default function StartText() {
       ))}
 
       {/* Content — sits above slides */}
-      <div className="relative z-10 flex flex-col justify-center min-h-svh px-8 sm:px-14 lg:px-24 pt-28 pb-16">
+      <div className="relative z-10 flex flex-col justify-center min-h-svh px-5 sm:px-14 lg:px-24 pt-24 sm:pt-28 pb-40 sm:pb-16">
         <div ref={heroRef} className="max-w-3xl">
           {/* Eyebrow */}
           <div
@@ -253,7 +253,7 @@ export default function StartText() {
         className="absolute bottom-0 left-0 right-0 z-10"
         style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(12px)" }}
       >
-        <div className="max-w-295 mx-auto px-8 py-5 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-0 divide-x divide-white/10">
+        <div className="max-w-295 mx-auto px-4 sm:px-8 py-5 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0 sm:divide-x divide-white/10">
           {STATS.map((s, i) => (
             <div key={i} className="text-center sm:px-8">
               <div

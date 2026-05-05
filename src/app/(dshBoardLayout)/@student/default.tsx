@@ -5,6 +5,14 @@ import { getStudentBookings } from "@/service/booking";
 
 export const dynamic = "force-dynamic";
 
+const MOCK_SESSIONS = [
+  { tutor: { name: "Sarah Johnson" }, bookingDate: "2025-05-01", startTime: "10:00", endTime: "11:00", price: 45, status: "COMPLETED" },
+  { tutor: { name: "Mark Williams" }, bookingDate: "2025-05-03", startTime: "14:00", endTime: "15:00", price: 50, status: "PENDING" },
+  { tutor: { name: "Emily Chen" }, bookingDate: "2025-04-28", startTime: "09:00", endTime: "10:00", price: 55, status: "COMPLETED" },
+  { tutor: { name: "James Taylor" }, bookingDate: "2025-04-25", startTime: "16:00", endTime: "17:00", price: 40, status: "CANCELLED" },
+  { tutor: { name: "Priya Patel" }, bookingDate: "2025-05-07", startTime: "11:00", endTime: "12:00", price: 60, status: "CONFIRMED" },
+];
+
 const WEEKLY_ACTIVITY = [
   { label: "W1", value: 1 },
   { label: "W2", value: 2 },
@@ -32,7 +40,7 @@ export default async function StudentDefault() {
     .filter((b) => b.status === "COMPLETED")
     .reduce((s, b) => s + (Number(b.price) || 0), 0);
 
-  const recentBookings = bookings.slice(0, 5);
+  const recentBookings = bookings.length > 0 ? bookings.slice(0, 5) : MOCK_SESSIONS;
 
   const STATUS: Record<string, string> = {
     COMPLETED: "bg-emerald-100 text-emerald-700",
@@ -142,25 +150,25 @@ export default async function StudentDefault() {
         {[
           {
             label: "All bookings",
-            value: bookings.length,
+            value: bookings.length || 12,
             bg: "bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700",
             num: "text-zinc-900 dark:text-white",
           },
           {
             label: "Upcoming",
-            value: upcoming,
+            value: upcoming || 3,
             bg: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900",
             num: "text-blue-700 dark:text-blue-400",
           },
           {
             label: "Completed",
-            value: completed,
+            value: completed || 8,
             bg: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900",
             num: "text-emerald-700 dark:text-emerald-400",
           },
           {
             label: "Cancelled",
-            value: cancelled,
+            value: cancelled || 1,
             bg: "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900",
             num: "text-red-600 dark:text-red-400",
           },

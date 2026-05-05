@@ -155,7 +155,7 @@ export default function VideoCallSection() {
   }, [visible]);
 
   return (
-    <section className="relative bg-[#0a0a0a] overflow-hidden py-28">
+    <section className="relative bg-[#0a0a0a] overflow-hidden py-24">
       {/* ── Background decoration ── */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Radial blue glow centre-left */}
@@ -186,7 +186,7 @@ export default function VideoCallSection() {
         </div>
 
         {/* ── Two-column layout ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* LEFT — copy */}
           <div className="space-y-8">
             <div

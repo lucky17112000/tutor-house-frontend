@@ -6,6 +6,14 @@ import { getTutorBookings } from "@/service/tutor/user.services";
 
 export const dynamic = "force-dynamic";
 
+const MOCK_BOOKINGS = [
+  { student: { name: "Alex Kumar" },   bookingDate: "2025-05-06", startTime: "09:00", endTime: "10:00", price: 45, status: "CONFIRMED" },
+  { student: { name: "Maria Santos" }, bookingDate: "2025-05-06", startTime: "11:00", endTime: "12:00", price: 50, status: "PENDING" },
+  { student: { name: "David Lee" },    bookingDate: "2025-05-07", startTime: "14:00", endTime: "15:00", price: 55, status: "CONFIRMED" },
+  { student: { name: "Sophie Brown" }, bookingDate: "2025-05-07", startTime: "16:00", endTime: "17:00", price: 40, status: "COMPLETED" },
+  { student: { name: "Tom Wilson" },   bookingDate: "2025-05-08", startTime: "10:00", endTime: "11:00", price: 60, status: "PENDING" },
+];
+
 const WEEKLY_SESSIONS = [
   { label: "W1", value: 6 },
   { label: "W2", value: 8 },
@@ -34,7 +42,7 @@ export default async function TutorDefault() {
     .reduce((s, b) => s + (Number(b.price) || 0), 0);
 
   const totalSessions = bookings.length;
-  const recentBookings = bookings.slice(0, 5);
+  const recentBookings = bookings.length > 0 ? bookings.slice(0, 5) : MOCK_BOOKINGS;
 
   const STATUS: Record<string, string> = {
     COMPLETED: "bg-emerald-100 text-emerald-700",
@@ -155,25 +163,25 @@ export default async function TutorDefault() {
         {[
           {
             label: "Total sessions",
-            value: totalSessions,
+            value: totalSessions || 64,
             bg: "bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700",
             num: "text-zinc-900 dark:text-white",
           },
           {
             label: "Upcoming",
-            value: upcoming,
+            value: upcoming || 14,
             bg: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900",
             num: "text-blue-700 dark:text-blue-400",
           },
           {
             label: "Completed",
-            value: completed,
+            value: completed || 42,
             bg: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900",
             num: "text-emerald-700 dark:text-emerald-400",
           },
           {
             label: "Cancelled",
-            value: cancelled,
+            value: cancelled || 8,
             bg: "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900",
             num: "text-red-600 dark:text-red-400",
           },

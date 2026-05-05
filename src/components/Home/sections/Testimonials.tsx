@@ -65,7 +65,7 @@ export default function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <div
               key={t.name}
-              className="flex flex-col p-8 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-[0_20px_40px_-12px_rgba(29,78,216,0.1)] transition-all duration-300 hover:-translate-y-1"
+              className="flex flex-col p-5 md:p-8 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-[0_20px_40px_-12px_rgba(29,78,216,0.1)] transition-all duration-300 hover:-translate-y-1"
             >
               {/* Stars */}
               <div className="flex gap-1 mb-5">

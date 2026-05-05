@@ -92,7 +92,7 @@ export default function HowItWorks() {
           {STEPS.map((step, i) => (
             <div
               key={step.num}
-              className="relative flex flex-col items-center text-center p-8 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-[0_16px_40px_-12px_rgba(29,78,216,0.12)] transition-all duration-300 group"
+              className="relative flex flex-col items-center text-center p-5 md:p-8 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-[0_16px_40px_-12px_rgba(29,78,216,0.12)] transition-all duration-300 group"
             >
               {/* Number badge */}
               <div

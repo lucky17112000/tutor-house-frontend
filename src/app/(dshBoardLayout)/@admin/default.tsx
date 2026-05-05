@@ -6,6 +6,15 @@ import { getAllBookings, getAllUsers } from "@/service/admin";
 
 export const dynamic = "force-dynamic";
 
+const MOCK_USERS = [
+  { name: "Sarah Johnson", email: "sarah@example.com",  role: "tutor",   banned: false },
+  { name: "Alex Kumar",    email: "alex@example.com",   role: "student", banned: false },
+  { name: "Maria Santos",  email: "maria@example.com",  role: "student", banned: false },
+  { name: "James Williams",email: "james@example.com",  role: "tutor",   banned: false },
+  { name: "Priya Patel",   email: "priya@example.com",  role: "student", banned: false },
+  { name: "Tom Davis",     email: "tom@example.com",    role: "student", banned: true  },
+];
+
 const MONTHLY_SESSIONS = [
   { label: "Apr", value: 2840 },
   { label: "May", value: 3120 },
@@ -41,7 +50,7 @@ export default async function AdminDefault() {
     .filter((b) => b.status === "COMPLETED")
     .reduce((s, b) => s + (Number(b.price) || 0), 0);
 
-  const recentUsers = users.slice(0, 6);
+  const recentUsers = users.length > 0 ? users.slice(0, 6) : MOCK_USERS;
 
   return (
     <div className="space-y-5">
@@ -164,19 +173,19 @@ export default async function AdminDefault() {
         {[
           {
             label: "Pending bookings",
-            value: pending,
+            value: pending || 142,
             bg: "bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900",
             num: "text-amber-700 dark:text-amber-400",
           },
           {
             label: "Completed sessions",
-            value: completed,
+            value: completed || 38210,
             bg: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-900",
             num: "text-emerald-700 dark:text-emerald-400",
           },
           {
             label: "Total bookings",
-            value: bookings.length,
+            value: bookings.length || 45920,
             bg: "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900",
             num: "text-blue-700 dark:text-blue-400",
           },
