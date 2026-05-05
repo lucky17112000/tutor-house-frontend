@@ -47,10 +47,10 @@ const Navbar1 = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] px-4 sm:px-8 lg:px-12 ${
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] px-4 sm:px-8 lg:px-12 ${
           scrolled
-            ? "py-3 bg-white/85 dark:bg-zinc-950/85 backdrop-blur-2xl border-b border-black/8 dark:border-white/8 shadow-[0_8px_40px_-8px_rgba(10,10,10,0.1)]"
-            : "py-5 bg-transparent border-b border-transparent"
+            ? "py-3 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-3xl border-b border-black/6 dark:border-white/6 shadow-[0_8px_48px_-8px_rgba(10,10,10,0.12),0_1px_0_0_rgba(0,0,0,0.04)]"
+            : "py-5 bg-linear-to-b from-black/30 to-transparent backdrop-blur-sm border-b border-transparent"
         }`}
       >
         {/* ── Brand ── */}
@@ -89,13 +89,13 @@ const Navbar1 = () => {
 
         {/* ── Desktop Links ── */}
         <ul className="hidden lg:flex items-center gap-0.5 list-none">
-          {NAV_LINKS.map(({ label, href, Icon }) => {
+          {NAV_LINKS.map(({ label, href }) => {
             const active = isActive(href);
             return (
               <li key={href}>
                 <Link
                   href={href}
-                  className={`group relative inline-flex items-center pl-8 pr-3.5 py-2 rounded-xl text-[14px] font-medium transition-colors duration-300 overflow-hidden ${
+                  className={`group relative inline-flex items-center px-4 py-2 rounded-xl text-[14px] font-medium transition-all duration-300 overflow-hidden ${
                     active
                       ? scrolled
                         ? "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30"
@@ -105,7 +105,7 @@ const Navbar1 = () => {
                       : "text-white/80 hover:text-white"
                   }`}
                 >
-                  {/* Ecospark radial glow */}
+                  {/* Radial glow on hover */}
                   <span
                     className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{
@@ -121,26 +121,27 @@ const Navbar1 = () => {
                     }`}
                   />
 
-                  {/* Icon — absolute so label never shifts */}
-                  <Icon
-                    className="absolute left-2.5 size-3.5 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-250 pointer-events-none"
-                  />
-
-                  {/* Label — stays in place */}
+                  {/* Label */}
                   <span className="relative">{label}</span>
 
-                  {/* Spark sweep line */}
+                  {/* Sweep line on hover */}
                   <span
-                    className={`absolute bottom-1 left-3 right-3 h-px rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left ${
+                    className={`absolute bottom-0.5 left-3 right-3 h-px rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${
                       scrolled
-                        ? "bg-linear-to-r from-blue-600 via-blue-400 to-transparent"
+                        ? "bg-linear-to-r from-blue-500 via-blue-300 to-transparent"
                         : "bg-linear-to-r from-white via-white/60 to-transparent"
                     }`}
                   />
 
-                  {/* Active dot */}
+                  {/* Active indicator — glowing pill bar */}
                   {active && (
-                    <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${scrolled ? "bg-blue-600" : "bg-white"}`} />
+                    <span
+                      className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.75 w-7 rounded-full transition-all duration-300 ${
+                        scrolled
+                          ? "bg-blue-500 shadow-[0_0_10px_3px_rgba(59,130,246,0.55)]"
+                          : "bg-white shadow-[0_0_10px_3px_rgba(255,255,255,0.45)]"
+                      }`}
+                    />
                   )}
                 </Link>
               </li>
@@ -249,14 +250,14 @@ const Navbar1 = () => {
                 await authClient.signOut();
                 router.push("/");
               }}
-              className={`hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13.5px] font-semibold transition-all duration-400 hover:-translate-y-0.5 hover:shadow-[0_0_24px_4px_rgba(239,68,68,0.3)] ${
+              className={`hidden lg:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-300 group ${
                 scrolled
-                  ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-red-600 hover:text-white"
-                  : "bg-white text-zinc-900 hover:bg-red-50"
+                  ? "border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-red-200 dark:hover:border-red-800 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20"
+                  : "border border-white/25 text-white/75 hover:text-white hover:border-red-400/50 hover:bg-red-500/10"
               }`}
             >
-              <LogOut className="size-3.5" />
-              Logout
+              <LogOut className="size-3.5 group-hover:translate-x-0.5 transition-transform duration-200" />
+              Sign out
             </button>
           )}
 

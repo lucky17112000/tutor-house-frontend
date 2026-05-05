@@ -1,153 +1,286 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Tutor House — Marketing UI Kit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../../colors_and_type.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-</head>
-<body>
-  <div id="root"></div>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tutor House — Marketing UI Kit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../colors_and_type.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
 
-  <script type="text/babel" src="components/Navbar.jsx"></script>
-  <script type="text/babel" src="components/Hero.jsx"></script>
-  <script type="text/babel" src="components/TutorCard.jsx"></script>
-  <script type="text/babel" src="components/TutorList.jsx"></script>
-  <script type="text/babel" src="components/TutorDetail.jsx"></script>
-  <script type="text/babel" src="components/About.jsx"></script>
-  <script type="text/babel" src="components/CTASection.jsx"></script>
-  <script type="text/babel" src="components/Footer.jsx"></script>
-  <script type="text/babel" src="components/Auth.jsx"></script>
+    <script type="text/babel" src="components/Navbar.jsx"></script>
+    <script type="text/babel" src="components/Hero.jsx"></script>
+    <script type="text/babel" src="components/TutorCard.jsx"></script>
+    <script type="text/babel" src="components/TutorList.jsx"></script>
+    <script type="text/babel" src="components/TutorDetail.jsx"></script>
+    <script type="text/babel" src="components/About.jsx"></script>
+    <script type="text/babel" src="components/CTASection.jsx"></script>
+    <script type="text/babel" src="components/Footer.jsx"></script>
+    <script type="text/babel" src="components/Auth.jsx"></script>
 
-  <script type="text/babel">
-    const TUTORS = [
-      { id: 't1', name: 'Sarah Johnson', category: 'Math', hourlyRate: 45, rating: 4.9,
-        bio: 'PhD in mathematics with 12+ years tutoring algebra, calculus, and SAT prep. Patient and methodical.',
-        image: '../../assets/images/tutor-1.webp' },
-      { id: 't2', name: 'Marcus Chen', category: 'Science', hourlyRate: 55, rating: 4.8,
-        bio: 'Physics & chemistry specialist. MIT grad. Loves making hard concepts feel obvious.',
-        image: '../../assets/images/tutor-2.jpg' },
-      { id: 't3', name: 'Aisha Patel', category: 'Languages', hourlyRate: 38, rating: 4.95,
-        bio: 'Fluent in 5 languages. Conversational French & Spanish from day one.',
-        image: '../../assets/images/tutor-3.jpg' },
-      { id: 't4', name: 'David Okafor', category: 'Test Prep', hourlyRate: 60, rating: 5.0,
-        bio: 'SAT, ACT, GRE expert. Avg score boost +210 points. Strict but fun.',
-        image: '../../assets/images/tutor-4.jpg' },
-      { id: 't5', name: 'Emma Williams', category: 'Math', hourlyRate: 42, rating: 4.7,
-        bio: 'Geometry & trig. Specializes in students who think they "just don\'t get math."',
-        image: '../../assets/images/tutor-5.avif' },
-      { id: 't6', name: 'Liam Park', category: 'Music', hourlyRate: 50, rating: 4.85,
-        bio: 'Classical pianist. Theory, performance, and exam prep up to grade 8.',
-        image: '../../assets/images/tutor-6.avif' },
-      { id: 't7', name: 'Priya Singh', category: 'Science', hourlyRate: 48, rating: 4.9,
-        bio: 'Bio & chemistry. Pre-med tutoring with a knack for memorization tricks.',
-        image: '../../assets/images/tutor-7.avif' },
-      { id: 't8', name: 'James Hartley', category: 'Languages', hourlyRate: 35, rating: 4.6,
-        bio: 'IELTS & TOEFL prep. Helped 200+ students study abroad.',
-        image: '../../assets/images/tutor-8.avif' },
-    ];
+    <script type="text/babel">
+      const TUTORS = [
+        {
+          id: "t1",
+          name: "Sarah Johnson",
+          category: "Math",
+          hourlyRate: 45,
+          rating: 4.9,
+          bio: "PhD in mathematics with 12+ years tutoring algebra, calculus, and SAT prep. Patient and methodical.",
+          image: "../../assets/images/tutor-1.webp",
+        },
+        {
+          id: "t2",
+          name: "Marcus Chen",
+          category: "Science",
+          hourlyRate: 55,
+          rating: 4.8,
+          bio: "Physics & chemistry specialist. MIT grad. Loves making hard concepts feel obvious.",
+          image: "../../assets/images/tutor-2.jpg",
+        },
+        {
+          id: "t3",
+          name: "Aisha Patel",
+          category: "Languages",
+          hourlyRate: 38,
+          rating: 4.95,
+          bio: "Fluent in 5 languages. Conversational French & Spanish from day one.",
+          image: "../../assets/images/tutor-3.jpg",
+        },
+        {
+          id: "t4",
+          name: "David Okafor",
+          category: "Test Prep",
+          hourlyRate: 60,
+          rating: 5.0,
+          bio: "SAT, ACT, GRE expert. Avg score boost +210 points. Strict but fun.",
+          image: "../../assets/images/tutor-4.jpg",
+        },
+        {
+          id: "t5",
+          name: "Emma Williams",
+          category: "Math",
+          hourlyRate: 42,
+          rating: 4.7,
+          bio: 'Geometry & trig. Specializes in students who think they "just don\'t get math."',
+          image: "../../assets/images/tutor-5.avif",
+        },
+        {
+          id: "t6",
+          name: "Liam Park",
+          category: "Music",
+          hourlyRate: 50,
+          rating: 4.85,
+          bio: "Classical pianist. Theory, performance, and exam prep up to grade 8.",
+          image: "../../assets/images/tutor-6.avif",
+        },
+        {
+          id: "t7",
+          name: "Priya Singh",
+          category: "Science",
+          hourlyRate: 48,
+          rating: 4.9,
+          bio: "Bio & chemistry. Pre-med tutoring with a knack for memorization tricks.",
+          image: "../../assets/images/tutor-7.avif",
+        },
+        {
+          id: "t8",
+          name: "James Hartley",
+          category: "Languages",
+          hourlyRate: 35,
+          rating: 4.6,
+          bio: "IELTS & TOEFL prep. Helped 200+ students study abroad.",
+          image: "../../assets/images/tutor-8.avif",
+        },
+      ];
 
-    function App() {
-      const [route, setRoute] = React.useState('home');
-      const [authMode, setAuthMode] = React.useState('login');
-      const [activeTutor, setActiveTutor] = React.useState(null);
-      const [toast, setToast] = React.useState(null);
+      function App() {
+        const [route, setRoute] = React.useState("home");
+        const [authMode, setAuthMode] = React.useState("login");
+        const [activeTutor, setActiveTutor] = React.useState(null);
+        const [toast, setToast] = React.useState(null);
 
-      const goto = (r) => {
-        setRoute(r);
-        setActiveTutor(null);
-        window.scrollTo({ top: 0 });
-      };
-      const viewTutor = (t) => {
-        setActiveTutor(t);
-        setRoute('tutorDetail');
-        window.scrollTo({ top: 0 });
-      };
-      const showToast = (msg) => {
-        setToast(msg);
-        setTimeout(() => setToast(null), 2400);
-      };
-      const confirmBooking = (tutor, day, slot) => {
-        showToast(`✅ Booked ${tutor.name} — ${day} ${slot}`);
-      };
+        const goto = (r) => {
+          setRoute(r);
+          setActiveTutor(null);
+          window.scrollTo({ top: 0 });
+        };
+        const viewTutor = (t) => {
+          setActiveTutor(t);
+          setRoute("tutorDetail");
+          window.scrollTo({ top: 0 });
+        };
+        const showToast = (msg) => {
+          setToast(msg);
+          setTimeout(() => setToast(null), 2400);
+        };
+        const confirmBooking = (tutor, day, slot) => {
+          showToast(`✅ Booked ${tutor.name} — ${day} ${slot}`);
+        };
 
-      const showNav = route !== 'login' && route !== 'signup';
+        const showNav = route !== "login" && route !== "signup";
 
-      return (
-        <>
-          {showNav && (
-            <Navbar route={route} onNavigate={goto}
-                    onLogin={() => { setAuthMode('login'); setRoute('login'); }}
-                    onSignup={() => { setAuthMode('signup'); setRoute('signup'); }} />
-          )}
-          {route === 'home' && (
-            <>
-              <Hero onPrimary={() => { setAuthMode('signup'); setRoute('signup'); }}
-                    onSecondary={() => goto('tutors')} />
-              <TutorList tutors={TUTORS.slice(0, 4)} onView={viewTutor} />
-              <CTASection onSignup={() => { setAuthMode('signup'); setRoute('signup'); }} />
-              <Footer />
-            </>
-          )}
-          {route === 'tutors' && (
-            <>
-              <TutorList tutors={TUTORS} onView={viewTutor} />
-              <Footer />
-            </>
-          )}
-          {route === 'tutorDetail' && activeTutor && (
-            <>
-              <TutorDetail tutor={activeTutor} onBack={() => goto('tutors')} onConfirm={confirmBooking} />
-              <Footer />
-            </>
-          )}
-          {route === 'about' && (
-            <>
-              <About />
-              <CTASection onSignup={() => { setAuthMode('signup'); setRoute('signup'); }} />
-              <Footer />
-            </>
-          )}
-          {route === 'dashboard' && (
-            <section className="th-section">
-              <div className="th-container" style={{ textAlign: 'center', padding: '80px 0' }}>
-                <div className="th-eyebrow"><span className="th-eyebrow-dot"></span>Authenticated App</div>
-                <h2 className="th-h2">Open the <span className="th-grad-text">dashboard</span> kit</h2>
-                <p className="th-section-sub" style={{ margin: '0 auto 24px' }}>
-                  Student, tutor, and admin dashboards live in their own UI kit.
-                </p>
-                <a className="th-btn th-btn-cta th-btn-lg" href="../dashboard/index.html">Open dashboard kit →</a>
+        return (
+          <>
+            {showNav && (
+              <Navbar
+                route={route}
+                onNavigate={goto}
+                onLogin={() => {
+                  setAuthMode("login");
+                  setRoute("login");
+                }}
+                onSignup={() => {
+                  setAuthMode("signup");
+                  setRoute("signup");
+                }}
+              />
+            )}
+            {route === "home" && (
+              <>
+                <Hero
+                  onPrimary={() => {
+                    setAuthMode("signup");
+                    setRoute("signup");
+                  }}
+                  onSecondary={() => goto("tutors")}
+                />
+                <TutorList tutors={TUTORS.slice(0, 4)} onView={viewTutor} />
+                <CTASection
+                  onSignup={() => {
+                    setAuthMode("signup");
+                    setRoute("signup");
+                  }}
+                />
+                <Footer />
+              </>
+            )}
+            {route === "tutors" && (
+              <>
+                <TutorList tutors={TUTORS} onView={viewTutor} />
+                <Footer />
+              </>
+            )}
+            {route === "tutorDetail" && activeTutor && (
+              <>
+                <TutorDetail
+                  tutor={activeTutor}
+                  onBack={() => goto("tutors")}
+                  onConfirm={confirmBooking}
+                />
+                <Footer />
+              </>
+            )}
+            {route === "about" && (
+              <>
+                <About />
+                <CTASection
+                  onSignup={() => {
+                    setAuthMode("signup");
+                    setRoute("signup");
+                  }}
+                />
+                <Footer />
+              </>
+            )}
+            {route === "dashboard" && (
+              <section className="th-section">
+                <div
+                  className="th-container"
+                  style={{ textAlign: "center", padding: "80px 0" }}
+                >
+                  <div className="th-eyebrow">
+                    <span className="th-eyebrow-dot"></span>Authenticated App
+                  </div>
+                  <h2 className="th-h2">
+                    Open the <span className="th-grad-text">dashboard</span> kit
+                  </h2>
+                  <p
+                    className="th-section-sub"
+                    style={{ margin: "0 auto 24px" }}
+                  >
+                    Student, tutor, and admin dashboards live in their own UI
+                    kit.
+                  </p>
+                  <a
+                    className="th-btn th-btn-cta th-btn-lg"
+                    href="../dashboard/index.html"
+                  >
+                    Open dashboard kit →
+                  </a>
+                </div>
+                <Footer />
+              </section>
+            )}
+            {(route === "login" || route === "signup") && (
+              <AuthCard
+                mode={authMode}
+                onSwitch={() =>
+                  setAuthMode(authMode === "login" ? "signup" : "login")
+                }
+                onSubmit={() => {
+                  showToast(
+                    authMode === "login"
+                      ? "My Learning Dashboard back!"
+                      : "Account created!",
+                  );
+                  goto("home");
+                }}
+              />
+            )}
+            {(route === "login" || route === "signup") && (
+              <div
+                style={{ position: "fixed", top: 16, left: 16, zIndex: 100 }}
+              >
+                <button
+                  className="th-btn th-btn-outline th-btn-sm"
+                  onClick={() => goto("home")}
+                >
+                  ← Back
+                </button>
               </div>
-              <Footer />
-            </section>
-          )}
-          {(route === 'login' || route === 'signup') && (
-            <AuthCard mode={authMode}
-                      onSwitch={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')}
-                      onSubmit={() => { showToast(authMode === 'login' ? 'Welcome back!' : 'Account created!'); goto('home'); }} />
-          )}
-          {(route === 'login' || route === 'signup') && (
-            <div style={{ position: 'fixed', top: 16, left: 16, zIndex: 100 }}>
-              <button className="th-btn th-btn-outline th-btn-sm" onClick={() => goto('home')}>← Back</button>
-            </div>
-          )}
-          {toast && (
-            <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 200,
-                          background: '#18181b', color: '#fff', padding: '12px 20px',
-                          borderRadius: 12, fontWeight: 600, fontSize: 14,
-                          boxShadow: '0 16px 32px -8px rgba(0,0,0,.3)' }}>
-              {toast}
-            </div>
-          )}
-        </>
-      );
-    }
+            )}
+            {toast && (
+              <div
+                style={{
+                  position: "fixed",
+                  bottom: 24,
+                  right: 24,
+                  zIndex: 200,
+                  background: "#18181b",
+                  color: "#fff",
+                  padding: "12px 20px",
+                  borderRadius: 12,
+                  fontWeight: 600,
+                  fontSize: 14,
+                  boxShadow: "0 16px 32px -8px rgba(0,0,0,.3)",
+                }}
+              >
+                {toast}
+              </div>
+            )}
+          </>
+        );
+      }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
-</body>
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
 </html>

@@ -2,6 +2,7 @@
 
 import { deleteUserSt } from "@/actions/signin.actions";
 import { getAllUsers } from "@/service/admin";
+import ClientPaginationBar from "@/components/shared/pagination/ClientPaginationBar";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ export default function UserFind() {
   const [loading, setLoading]   = useState(true);
   const [query, setQuery]       = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [page, setPage]         = useState(1);
+  const PER_PAGE = 8;
   const router = useRouter();
 
   const fetchUsers = async () => {
@@ -63,6 +66,11 @@ export default function UserFind() {
           u.role?.toLowerCase().includes(query.toLowerCase())
       )
     : users;
+
+  // reset to page 1 whenever search changes
+  useEffect(() => { setPage(1); }, [query]);
+
+  const paged = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const totalTutors   = users.filter((u) => u.role?.toLowerCase() === "tutor").length;
   const totalStudents = users.filter((u) => u.role?.toLowerCase() === "student").length;
@@ -173,8 +181,8 @@ export default function UserFind() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.length > 0 ? (
-                  filtered.map((user: any) => {
+                {paged.length > 0 ? (
+                  paged.map((user: any) => {
                     const roleKey = (user.role ?? "student").toLowerCase();
                     const roleCls = ROLE_STYLE[roleKey] ?? ROLE_STYLE.student;
                     const initial = (user.name ?? user.email ?? "?")[0].toUpperCase();
@@ -275,6 +283,16 @@ export default function UserFind() {
               </tbody>
             </table>
           </div>
+        )}
+
+        {/* Pagination bar */}
+        {!loading && (
+          <ClientPaginationBar
+            total={filtered.length}
+            page={page}
+            perPage={PER_PAGE}
+            onPage={setPage}
+          />
         )}
       </div>
     </div>

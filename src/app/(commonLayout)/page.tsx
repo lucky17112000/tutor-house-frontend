@@ -2,11 +2,10 @@ import { CarouselSpacing } from "@/components/Home/carousel/carousolSpacing";
 import StatsStrip from "@/components/Home/stats/StatsStrip";
 import StartText from "@/components/Home/startText/StartText";
 import ScrollIndicator from "@/components/Home/ScrollIndicator";
-import CTABanner from "@/components/Home/sections/CTABanner";
-import FeaturedReviews from "@/components/Home/sections/FeaturedReviews";
+import FAQ from "@/components/Home/sections/FAQ";
 import HowItWorks from "@/components/Home/sections/HowItWorks";
 import SubjectCategories from "@/components/Home/sections/SubjectCategories";
-import Testimonials from "@/components/Home/sections/Testimonials";
+import ReviewsSlider from "@/components/Home/sections/ReviewsSlider";
 import WhyChooseUs from "@/components/Home/sections/WhyChooseUs";
 import VideoCallSection from "@/components/Home/sections/VideoCallSection";
 import FindTutorSection from "@/components/Home/sections/FindTutorSection";
@@ -78,16 +77,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7 ── Featured reviews: rating metrics + big quote + 3 mini cards */}
-      <FeaturedReviews />
+      {/* 7 ── Reviews: continuous double-row marquee slider */}
+      <ReviewsSlider />
 
-      {/* 8 ── Testimonials: 3 student cards + trust bar */}
-      <Testimonials />
-
-      {/* 9 ── CTA Banner: blue, email form */}
-      <section className="py-24 bg-white dark:bg-zinc-950">
-        <CTABanner />
-      </section>
+      {/* 9 ── FAQ: common questions accordion */}
+      <FAQ />
 
       {/* Footer is rendered by CommonLayout — not duplicated here */}
     </div>

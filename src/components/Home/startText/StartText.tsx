@@ -250,8 +250,8 @@ export default function StartText() {
 
       {/* ── Animated stats bar ── */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-10"
-        style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(12px)" }}
+        className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10"
+        style={{ background: "rgba(0,0,0,0.48)", backdropFilter: "blur(24px) saturate(1.6)" }}
       >
         <div className="max-w-295 mx-auto px-4 sm:px-8 py-5 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0 sm:divide-x divide-white/10">
           {STATS.map((s, i) => (
@@ -283,14 +283,14 @@ export default function StartText() {
       {/* ── Navigation arrows ── */}
       <button
         onClick={prev}
-        className="absolute left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm border border-white/20 grid place-items-center text-white transition-colors duration-200"
+        className="absolute left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/40 grid place-items-center text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_4px_rgba(255,255,255,0.12)]"
         aria-label="Previous slide"
       >
         <ChevronLeft className="size-5" />
       </button>
       <button
         onClick={next}
-        className="absolute right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm border border-white/20 grid place-items-center text-white transition-colors duration-200"
+        className="absolute right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 hover:border-white/40 grid place-items-center text-white transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_4px_rgba(255,255,255,0.12)]"
         aria-label="Next slide"
       >
         <ChevronRight className="size-5" />
@@ -337,7 +337,8 @@ export default function StartText() {
         style={{
           borderTop: "1px solid rgba(255,255,255,0.1)",
           borderBottom: "1px solid rgba(255,255,255,0.1)",
-          background: "rgba(0,0,0,0.3)",
+          background: "rgba(0,0,0,0.25)",
+          backdropFilter: "blur(8px)",
         }}
       >
         <div

@@ -2,6 +2,7 @@
 
 import { deleteTutorProfileSt } from "@/actions/signin.actions";
 import { getAllBookings, getAllUsers } from "@/service/admin";
+import ClientPaginationBar from "@/components/shared/pagination/ClientPaginationBar";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -35,6 +36,8 @@ export default function ManageTutors() {
   const [loading, setLoading]       = useState(true);
   const [query, setQuery]           = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [page, setPage]             = useState(1);
+  const PER_PAGE = 8;
 
   const load = async () => {
     setLoading(true);
@@ -97,6 +100,9 @@ export default function ManageTutors() {
           t.email.toLowerCase().includes(query.toLowerCase()),
       )
     : tutors;
+
+  useEffect(() => { setPage(1); }, [query]);
+  const paged = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   const totalSessions  = tutors.reduce((s, t) => s + t.sessions,  0);
   const totalEarnings  = tutors.reduce((s, t) => s + t.earnings,  0);
@@ -225,8 +231,8 @@ export default function ManageTutors() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.length > 0 ? (
-                  filtered.map((tutor) => {
+                {paged.length > 0 ? (
+                  paged.map((tutor) => {
                     const isDeleting = deletingId === tutor.id;
                     const initial    = (tutor.name ?? "T")[0].toUpperCase();
                     return (
@@ -323,6 +329,15 @@ export default function ManageTutors() {
               </tbody>
             </table>
           </div>
+        )}
+
+        {!loading && (
+          <ClientPaginationBar
+            total={filtered.length}
+            page={page}
+            perPage={PER_PAGE}
+            onPage={setPage}
+          />
         )}
       </div>
     </div>

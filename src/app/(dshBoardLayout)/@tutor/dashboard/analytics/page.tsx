@@ -25,7 +25,7 @@ export default async function TutorAnalyticsPage() {
     : (res?.bookings ?? res?.data ?? []);
 
   const upcoming = bookings.filter(
-    (b) => b.status === "PENDING" || b.status === "CONFIRMED"
+    (b) => b.status === "PENDING" || b.status === "CONFIRMED",
   ).length;
   const completed = bookings.filter((b) => b.status === "COMPLETED").length;
   const cancelled = bookings.filter((b) => b.status === "CANCELLED").length;
@@ -51,7 +51,7 @@ export default async function TutorAnalyticsPage() {
           className="font-extrabold text-zinc-900 dark:text-white tracking-[-0.02em]"
           style={{ fontSize: 28 }}
         >
-          Welcome back 👋
+          My Learning Dashboard back 👋
         </h1>
         <p className="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">
           Here&apos;s your teaching overview. Keep up the great work!
@@ -178,10 +178,7 @@ export default async function TutorAnalyticsPage() {
             num: "text-red-600 dark:text-red-400",
           },
         ].map((item) => (
-          <div
-            key={item.label}
-            className={`rounded-2xl border p-5 ${item.bg}`}
-          >
+          <div key={item.label} className={`rounded-2xl border p-5 ${item.bg}`}>
             <div
               className={`font-extrabold tracking-[-0.03em] mb-1 ${item.num}`}
               style={{ fontSize: 36 }}

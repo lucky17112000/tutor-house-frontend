@@ -145,7 +145,8 @@ export function SignupForm() {
           {/* Heading */}
           <div>
             <h2 className="font-serif font-normal text-[30px] leading-[1.1] tracking-[-0.015em] text-zinc-900 mb-2">
-              Create an <em className="text-blue-700 not-italic">account.</em>
+              Create Setup Interface{" "}
+              <em className="text-blue-700 not-italic">account.</em>
             </h2>
             <p className="text-sm text-zinc-500">
               Get matched with three tutors in under a minute.

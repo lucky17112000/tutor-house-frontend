@@ -7,11 +7,46 @@ import { getTutorBookings } from "@/service/tutor/user.services";
 export const dynamic = "force-dynamic";
 
 const MOCK_BOOKINGS = [
-  { student: { name: "Alex Kumar" },   bookingDate: "2025-05-06", startTime: "09:00", endTime: "10:00", price: 45, status: "CONFIRMED" },
-  { student: { name: "Maria Santos" }, bookingDate: "2025-05-06", startTime: "11:00", endTime: "12:00", price: 50, status: "PENDING" },
-  { student: { name: "David Lee" },    bookingDate: "2025-05-07", startTime: "14:00", endTime: "15:00", price: 55, status: "CONFIRMED" },
-  { student: { name: "Sophie Brown" }, bookingDate: "2025-05-07", startTime: "16:00", endTime: "17:00", price: 40, status: "COMPLETED" },
-  { student: { name: "Tom Wilson" },   bookingDate: "2025-05-08", startTime: "10:00", endTime: "11:00", price: 60, status: "PENDING" },
+  {
+    student: { name: "Alex Kumar" },
+    bookingDate: "2025-05-06",
+    startTime: "09:00",
+    endTime: "10:00",
+    price: 45,
+    status: "CONFIRMED",
+  },
+  {
+    student: { name: "Maria Santos" },
+    bookingDate: "2025-05-06",
+    startTime: "11:00",
+    endTime: "12:00",
+    price: 50,
+    status: "PENDING",
+  },
+  {
+    student: { name: "David Lee" },
+    bookingDate: "2025-05-07",
+    startTime: "14:00",
+    endTime: "15:00",
+    price: 55,
+    status: "CONFIRMED",
+  },
+  {
+    student: { name: "Sophie Brown" },
+    bookingDate: "2025-05-07",
+    startTime: "16:00",
+    endTime: "17:00",
+    price: 40,
+    status: "COMPLETED",
+  },
+  {
+    student: { name: "Tom Wilson" },
+    bookingDate: "2025-05-08",
+    startTime: "10:00",
+    endTime: "11:00",
+    price: 60,
+    status: "PENDING",
+  },
 ];
 
 const WEEKLY_SESSIONS = [
@@ -33,7 +68,7 @@ export default async function TutorDefault() {
     : (res?.bookings ?? res?.data ?? []);
 
   const upcoming = bookings.filter(
-    (b) => b.status === "PENDING" || b.status === "CONFIRMED"
+    (b) => b.status === "PENDING" || b.status === "CONFIRMED",
   ).length;
   const completed = bookings.filter((b) => b.status === "COMPLETED").length;
   const cancelled = bookings.filter((b) => b.status === "CANCELLED").length;
@@ -42,7 +77,8 @@ export default async function TutorDefault() {
     .reduce((s, b) => s + (Number(b.price) || 0), 0);
 
   const totalSessions = bookings.length;
-  const recentBookings = bookings.length > 0 ? bookings.slice(0, 5) : MOCK_BOOKINGS;
+  const recentBookings =
+    bookings.length > 0 ? bookings.slice(0, 5) : MOCK_BOOKINGS;
 
   const STATUS: Record<string, string> = {
     COMPLETED: "bg-emerald-100 text-emerald-700",
@@ -59,7 +95,7 @@ export default async function TutorDefault() {
           className="font-extrabold text-zinc-900 dark:text-white tracking-[-0.02em]"
           style={{ fontSize: 28 }}
         >
-          Welcome back 👋
+          Post-mortem and Autopsy of our platform's dashboard! (Tutor edition)
         </h1>
         <p className="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">
           Here&apos;s your teaching overview. Keep up the great work!
@@ -186,10 +222,7 @@ export default async function TutorDefault() {
             num: "text-red-600 dark:text-red-400",
           },
         ].map((item) => (
-          <div
-            key={item.label}
-            className={`rounded-2xl border p-5 ${item.bg}`}
-          >
+          <div key={item.label} className={`rounded-2xl border p-5 ${item.bg}`}>
             <div
               className={`font-extrabold tracking-[-0.03em] mb-1 ${item.num}`}
               style={{ fontSize: 36 }}

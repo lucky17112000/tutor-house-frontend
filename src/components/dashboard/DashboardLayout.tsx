@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { createAuthClient } from "better-auth/client";
 import { cn } from "@/lib/utils";
+import { ModeToggle } from "@/components/shared/ModeChange/ModeToggle";
 
 /* ─── Types ─── */
 interface NavChild  { id: string; name: string; emoji: string }
@@ -279,21 +280,13 @@ export default function DashboardLayout({ children, user, categories = [] }: Das
           </div>
         )}
 
-        {/* Home link */}
+        {/* Visit site link — compact */}
         <Link href="/"
-          className={cn("flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] font-medium text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-800 dark:hover:text-white transition-all duration-200 group",
+          className={cn("flex items-center gap-2.5 px-3 py-2 rounded-xl text-[12px] font-medium text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 group",
             collapsed && !isMobile && "justify-center")}>
-          <Home className="size-4 shrink-0 group-hover:scale-110 transition-transform duration-200" />
-          {(!collapsed || isMobile) && <span>Back to home</span>}
+          <Home className="size-3.5 shrink-0 group-hover:scale-110 transition-transform duration-200" />
+          {(!collapsed || isMobile) && <span className="truncate">tutorhouse.com</span>}
         </Link>
-
-        {/* Logout */}
-        <button onClick={handleLogout}
-          className={cn("w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] font-medium text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-600 transition-all duration-200 group",
-            collapsed && !isMobile && "justify-center")}>
-          <LogOut className="size-4 shrink-0 group-hover:translate-x-0.5 transition-transform duration-200" />
-          {(!collapsed || isMobile) && <span>Logout</span>}
-        </button>
       </div>
     </div>
   );
@@ -345,7 +338,20 @@ export default function DashboardLayout({ children, user, categories = [] }: Das
             {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
 
-          {/* Page title + breadcrumb */}
+          {/* Back to home — left of title */}
+          <Link
+            href="/"
+            title="Back to home"
+            className="group hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 border border-transparent hover:border-blue-100 dark:hover:border-blue-900/50 transition-all duration-200 shrink-0"
+          >
+            <Home className="size-3.5 group-hover:scale-110 transition-transform duration-200" />
+            <span className="text-[12px] font-semibold hidden md:inline">Home</span>
+          </Link>
+
+          {/* Divider */}
+          <div className="hidden sm:block w-px h-5 bg-zinc-100 dark:bg-zinc-800 shrink-0" />
+
+          {/* Page title */}
           <div className="flex items-center gap-2 min-w-0">
             <div className="w-1.5 h-5 rounded-full bg-blue-600 shrink-0" />
             <h1 className="text-[15px] font-extrabold text-zinc-900 dark:text-white tracking-tight truncate">
@@ -353,8 +359,8 @@ export default function DashboardLayout({ children, user, categories = [] }: Das
             </h1>
           </div>
 
-          {/* Spacer */}
-          <div className="ml-auto flex items-center gap-2">
+          {/* Right actions */}
+          <div className="ml-auto flex items-center gap-1.5">
 
             {/* Notification bell */}
             <button className="relative w-9 h-9 rounded-xl flex items-center justify-center text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-white transition-all duration-200">
@@ -362,8 +368,24 @@ export default function DashboardLayout({ children, user, categories = [] }: Das
               <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-blue-600 ring-2 ring-white dark:ring-zinc-900" />
             </button>
 
+            {/* Theme toggle */}
+            <ModeToggle />
+
             {/* Divider */}
-            <div className="w-px h-6 bg-zinc-100 dark:bg-zinc-800" />
+            <div className="w-px h-6 bg-zinc-100 dark:bg-zinc-800 mx-0.5" />
+
+            {/* Logout button */}
+            <button
+              onClick={handleLogout}
+              title="Sign out"
+              className="group flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/25 border border-transparent hover:border-red-100 dark:hover:border-red-900/40 transition-all duration-200"
+            >
+              <LogOut className="size-4 group-hover:translate-x-0.5 transition-transform duration-200" />
+              <span className="hidden md:inline text-[12.5px] font-semibold">Sign out</span>
+            </button>
+
+            {/* Divider */}
+            <div className="w-px h-6 bg-zinc-100 dark:bg-zinc-800 mx-0.5" />
 
             {/* User chip */}
             {user && (

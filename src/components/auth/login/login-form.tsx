@@ -183,7 +183,8 @@ export function LoginForm() {
           {/* Heading */}
           <div>
             <h2 className="font-serif font-normal text-[30px] leading-[1.1] tracking-[-0.015em] text-zinc-900 mb-2">
-              Welcome <em className="text-blue-700 not-italic">back.</em>
+              Vital Entry Access Point{" "}
+              <em className="text-blue-700 not-italic">Welcome Back.</em>
             </h2>
             <p className="text-sm text-zinc-500">
               Sign in to your account to continue.

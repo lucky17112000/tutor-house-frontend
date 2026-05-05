@@ -5,28 +5,53 @@
 @custom-variant dark (&:is(.dark *));
 
 @keyframes shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes logo-glow {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(29,78,216,0.35), 0 0 0 0px rgba(29,78,216,0.15); }
-  50%       { box-shadow: 0 0 22px 6px rgba(29,78,216,0.65), 0 0 0 5px rgba(29,78,216,0.12); }
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px 2px rgba(29, 78, 216, 0.35),
+      0 0 0 0px rgba(29, 78, 216, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 22px 6px rgba(29, 78, 216, 0.65),
+      0 0 0 5px rgba(29, 78, 216, 0.12);
+  }
 }
 
 @keyframes logo-shimmer {
-  0%   { transform: translateX(-120%) skewX(-20deg); }
-  100% { transform: translateX(220%)  skewX(-20deg); }
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-20deg);
+  }
 }
 
 @keyframes orbit {
-  from { transform: rotate(0deg)   translateX(18px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(18px) rotate(-360deg); }
+  from {
+    transform: rotate(0deg) translateX(18px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(18px) rotate(-360deg);
+  }
 }
 
 @keyframes orbit-reverse {
-  from { transform: rotate(0deg)    translateX(15px) rotate(0deg); }
-  to   { transform: rotate(-360deg) translateX(15px) rotate(360deg); }
+  from {
+    transform: rotate(0deg) translateX(15px) rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg) translateX(15px) rotate(360deg);
+  }
 }
 
 @theme inline {
@@ -154,29 +179,54 @@
    Auth card — rotating headline words
    ============================================================ */
 @keyframes rotate-words {
-  0%,  25%  { transform: translateY(0); }
-  33%, 58%  { transform: translateY(-50px); }
-  66%, 91%  { transform: translateY(-100px); }
-  100%      { transform: translateY(-150px); }
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+  33%,
+  58% {
+    transform: translateY(-50px);
+  }
+  66%,
+  91% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(-150px);
+  }
 }
 @keyframes auth-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @layer utilities {
-  .animate-rotate-words { animation: rotate-words 9s cubic-bezier(0.65, 0.05, 0.36, 1) infinite; }
-  .animate-auth-marquee { animation: auth-marquee 16s linear infinite; }
+  .animate-rotate-words {
+    animation: rotate-words 9s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+  }
+  .animate-auth-marquee {
+    animation: auth-marquee 16s linear infinite;
+  }
 }
 
 /* ============================================================
    Dashboard — Progress bar shine
    ============================================================ */
 @keyframes th-shine {
-  0%   { left: -40%; }
-  100% { left: 110%; }
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 110%;
+  }
 }
 @layer utilities {
-  .animate-th-shine { animation: th-shine 2.4s ease-in-out infinite; }
+  .animate-th-shine {
+    animation: th-shine 2.4s ease-in-out infinite;
+  }
 }
 
 /* ============================================================
@@ -184,24 +234,53 @@
    ============================================================ */
 
 @keyframes heroBlockIn {
-  from { opacity: 0; transform: translateX(-40px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 @keyframes heroPhotoIn {
-  from { opacity: 0; transform: translateX(40px) scale(0.96); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateX(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 @keyframes chipIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @keyframes statPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(1.4); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
 }
 
 @layer utilities {
