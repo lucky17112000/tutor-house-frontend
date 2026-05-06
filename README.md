@@ -17,7 +17,17 @@ Most tutoring platforms are just directories. Tutor House is a **full booking pi
 
 ---
 
-## The Life of a Session for tutor house users
+## The Life of a Session for tutor house users1 | <<<<<<< HEAD
+
+22 | export const getAllTutors = async (page: number = 1, limit: number = 4) => {
+
+> 23 | =======
+
+     | ^^^^^^^
+
+24 | export const getAllTutors = async (page: number = 1, limit: number = 5) => {
+25 | >>>>>>> afa85866013a6a9d91e24184f725ac3f34268be9
+26 | try {
 
 Every tutoring session on Tutor House takes this journey:
 

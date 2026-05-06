@@ -18,11 +18,7 @@ function getSessionToken(cookieStore: Awaited<ReturnType<typeof cookies>>) {
   );
 }
 
-<<<<<<< HEAD
 export const getAllTutors = async (page: number = 1, limit: number = 4) => {
-=======
-export const getAllTutors = async (page: number = 1, limit: number = 5) => {
->>>>>>> afa85866013a6a9d91e24184f725ac3f34268be9
   try {
     const response = await fetch(
       `${API_URL}/api/tutors?page=${page}&limit=${limit}`,
