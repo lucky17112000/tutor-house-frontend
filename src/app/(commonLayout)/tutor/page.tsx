@@ -2,7 +2,10 @@ import PaginationControles from "@/components/shared/pagination/paginationContro
 import TutorGrid from "@/components/tutor/TutorGrid";
 import { getAllTutors } from "@/service/tutor/user.services";
 import { Suspense } from "react";
+<<<<<<< HEAD
 import { GraduationCap, Users, Star } from "lucide-react";
+=======
+>>>>>>> afa85866013a6a9d91e24184f725ac3f34268be9
 
 const TutorPage = async ({
   searchParams,
@@ -21,6 +24,7 @@ const TutorPage = async ({
   const pagination = res?.pagination ?? null;
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-linear-to-b from-slate-50 via-white to-white dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-900">
 
       {/* ── Hero header ── */}
@@ -86,10 +90,28 @@ const TutorPage = async ({
               </p>
             </div>
           )}
+=======
+    <div className="min-h-screen">
+      {/* ── Page header ── */}
+      <div className="pt-24 pb-6 px-4 sm:px-6 md:px-12 sm:pt-28">
+        <p className="text-xs uppercase tracking-[0.22em] text-indigo-600 dark:text-indigo-400 font-semibold mb-2">
+          Find your tutor
+        </p>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+          <div>
+            <h1 className="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
+              Browse tutors
+            </h1>
+            <p className="mt-1 text-zinc-500 dark:text-zinc-400 text-sm">
+              Find Your Brain Doctor Here
+            </p>
+          </div>
+>>>>>>> afa85866013a6a9d91e24184f725ac3f34268be9
         </div>
       </div>
 
       {/* ── Search + Grid (client) ── */}
+<<<<<<< HEAD
       <div className="max-w-7xl mx-auto">
         <TutorGrid tutors={tutors} />
       </div>
@@ -97,6 +119,13 @@ const TutorPage = async ({
       {/* ── Pagination ── */}
       {pagination && pagination.totalPages > 1 && (
         <div className="mt-10 mb-16 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto">
+=======
+      <TutorGrid tutors={tutors} />
+
+      {/* ── Pagination ── */}
+      {pagination && pagination.totalPages > 1 && (
+        <div className="mt-10 mb-16 px-4 sm:px-6 md:px-12">
+>>>>>>> afa85866013a6a9d91e24184f725ac3f34268be9
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl py-3.5 shadow-sm">
             <Suspense>
               <PaginationControles meta={pagination} />
