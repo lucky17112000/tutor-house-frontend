@@ -17,7 +17,7 @@ Most tutoring platforms are just directories. Tutor House is a **full booking pi
 
 ---
 
-## The Life of a Session
+## The Life of a Session for tutor house users
 
 Every tutoring session on Tutor House takes this journey:
 
@@ -45,12 +45,12 @@ Your dashboard always shows exactly where each booking stands.
 
 ## Who Uses Tutor House?
 
-| You are...        | What you can do |
-|---|---|
-| **A visitor**     | Browse the homepage, read about tutors, explore subject categories |
-| **A student**     | Sign up, browse tutors, book sessions, join video calls, leave reviews, manage bookings |
-| **A tutor**       | Create a profile, set subjects and hourly rate, manage incoming bookings, join video calls, view reviews |
-| **An admin**      | Manage all users, tutors, bookings, and subject categories from a central dashboard |
+| You are...    | What you can do                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------------- |
+| **A visitor** | Browse the homepage, read about tutors, explore subject categories                                       |
+| **A student** | Sign up, browse tutors, book sessions, join video calls, leave reviews, manage bookings                  |
+| **A tutor**   | Create a profile, set subjects and hourly rate, manage incoming bookings, join video calls, view reviews |
+| **An admin**  | Manage all users, tutors, bookings, and subject categories from a central dashboard                      |
 
 Role separation is enforced server-side — the frontend reads your session token, the backend verifies it.
 
@@ -75,6 +75,7 @@ Authentication uses **better-auth** with cookie-based sessions. The Next.js App 
 ```
 
 This means:
+
 - Session tokens are read server-side, never exposed in the browser bundle
 - Pages render with real data on first load — no loading spinner for initial content
 - Role-based routing is enforced at the middleware layer before any component renders
@@ -83,20 +84,20 @@ This means:
 
 ## Tech Stack
 
-| Layer          | Technology |
-|---|---|
-| RENDERING      | [Next.js](https://nextjs.org) 16 App Router (SSR + RSC) |
-| LANGUAGE       | [TypeScript](https://www.typescriptlang.org) 5 |
+| Layer          | Technology                                                                 |
+| -------------- | -------------------------------------------------------------------------- |
+| RENDERING      | [Next.js](https://nextjs.org) 16 App Router (SSR + RSC)                    |
+| LANGUAGE       | [TypeScript](https://www.typescriptlang.org) 5                             |
 | UI LAYER       | [React](https://react.dev) 19 + [Tailwind CSS](https://tailwindcss.com) v4 |
-| COMPONENTS     | [shadcn/ui](https://ui.shadcn.com) + [Radix UI](https://www.radix-ui.com) |
+| COMPONENTS     | [shadcn/ui](https://ui.shadcn.com) + [Radix UI](https://www.radix-ui.com)  |
 | FORMS          | [TanStack Form](https://tanstack.com/form/latest) + [Zod](https://zod.dev) |
-| AUTH           | [better-auth](https://better-auth.com) + cookie sessions + jwt-decode |
-| VIDEO CALLS    | [ZegoCloud UIKit](https://www.zegocloud.com) |
-| CAROUSEL       | [Embla Carousel](https://www.embla-carousel.com) + autoplay plugin |
-| NOTIFICATIONS  | [Sonner](https://sonner.emilkowal.ski) |
-| THEMING        | [next-themes](https://github.com/pacocoursey/next-themes) (dark mode) |
-| ENV VALIDATION | [@t3-oss/env-nextjs](https://env.t3.gg) |
-| BUILD          | [npm](https://npmjs.com) |
+| AUTH           | [better-auth](https://better-auth.com) + cookie sessions + jwt-decode      |
+| VIDEO CALLS    | [ZegoCloud UIKit](https://www.zegocloud.com)                               |
+| CAROUSEL       | [Embla Carousel](https://www.embla-carousel.com) + autoplay plugin         |
+| NOTIFICATIONS  | [Sonner](https://sonner.emilkowal.ski)                                     |
+| THEMING        | [next-themes](https://github.com/pacocoursey/next-themes) (dark mode)      |
+| ENV VALIDATION | [@t3-oss/env-nextjs](https://env.t3.gg)                                    |
+| BUILD          | [npm](https://npmjs.com)                                                   |
 
 ---
 
@@ -236,11 +237,11 @@ src/
 
 ## Environment Variables
 
-| Variable                    | Required | Purpose |
-|---|---|---|
-| `NEXT_PUBLIC_API_BASE_URL`  | Yes      | Points to the backend REST API |
-| `BETTER_AUTH_SECRET`        | Yes      | Signs and verifies session tokens |
-| `NEXT_PUBLIC_APP_URL`       | No       | App origin (defaults to localhost:3000) |
+| Variable                   | Required | Purpose                                 |
+| -------------------------- | -------- | --------------------------------------- |
+| `NEXT_PUBLIC_API_BASE_URL` | Yes      | Points to the backend REST API          |
+| `BETTER_AUTH_SECRET`       | Yes      | Signs and verifies session tokens       |
+| `NEXT_PUBLIC_APP_URL`      | No       | App origin (defaults to localhost:3000) |
 
 ---
 
@@ -280,6 +281,6 @@ Routes that read session cookies render dynamically by design — do not force s
 
 Built by **Alamin Mustafa Rahim** · Tutor House Full-Stack Mission
 
-*Backend runs separately — this repo is the frontend only.*
+_Backend runs separately — this repo is the frontend only._
 
 </div>
