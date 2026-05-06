@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tutor House — Dashboard UI Kit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../colors_and_type.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel" src="components/DashSidebar.jsx"></script>
+    <script type="text/babel" src="components/TopBar.jsx"></script>
+    <script type="text/babel" src="components/StatCards.jsx"></script>
+    <script type="text/babel" src="components/Charts.jsx"></script>
+    <script type="text/babel" src="components/DataTable.jsx"></script>
+    <script type="text/babel" src="components/BookingRow.jsx"></script>
+    <script type="text/babel" src="components/AvailabilityEditor.jsx"></script>
+
+    <script type="text/babel">
+      const TUTORS = [
+        {
+          name: "Sarah Johnson",
+          subject: "Mathematics",
+          price: 45,
+          rating: 4.9,
+          image: "../../assets/images/tutor-1.webp",
+        },
+        {
+          name: "Marcus Chen",
+          subject: "Physics",
+          price: 55,
+          rating: 4.8,
+          image: "../../assets/images/tutor-2.jpg",
+        },
+        {
+          name: "Aisha Patel",
+          subject: "French",
+          price: 38,
+          rating: 4.95,
+          image: "../../assets/images/tutor-3.jpg",
+        },
+        {
+          name: "David Okafor",
+          subject: "SAT Prep",
+          price: 60,
+          rating: 5.0,
+          image: "../../assets/images/tutor-4.jpg",
+        },
+      ];
+      const BOOKINGS_STUDENT = [
+        {
+          with: "Sarah Johnson",
+          subject: "Calculus II review",
+          day: "Mon, Nov 11",
+          time: "14:00 – 15:00",
+          price: 45,
+          status: "upcoming",
+          image: "../../assets/images/tutor-1.webp",
+        },
+        {
+          with: "Marcus Chen",
+          subject: "Physics lab walkthrough",
+          day: "Wed, Nov 13",
+          time: "16:00 – 17:00",
+          price: 55,
+          status: "upcoming",
+          image: "../../assets/images/tutor-2.jpg",
+        },
+        {
+          with: "Aisha Patel",
+          subject: "French conversation",
+          day: "Sat, Nov 9",
+          time: "10:00 – 11:00",
+          price: 38,
+          status: "completed",
+          image: "../../assets/images/tutor-3.jpg",
+        },
+        {
+          with: "David Okafor",
+          subject: "SAT diagnostic",
+          day: "Fri, Nov 1",
+          time: "09:00 – 10:00",
+          price: 60,
+          status: "cancelled",
+          image: "../../assets/images/tutor-4.jpg",
+        },
+      ];
+      const BOOKINGS_TUTOR = [
+        {
+          with: "Lily Parker",
+          subject: "Calculus II review",
+          day: "Mon, Nov 11",
+          time: "14:00 – 15:00",
+          price: 45,
+          status: "upcoming",
+          image: "../../assets/images/tutor-5.avif",
+        },
+        {
+          with: "Noah Garcia",
+          subject: "Algebra fundamentals",
+          day: "Tue, Nov 12",
+          time: "16:00 – 17:00",
+          price: 45,
+          status: "pending",
+          image: "../../assets/images/tutor-6.avif",
+        },
+        {
+          with: "Mia Tanaka",
+          subject: "SAT prep session",
+          day: "Thu, Nov 14",
+          time: "10:00 – 11:00",
+          price: 45,
+          status: "pending",
+          image: "../../assets/images/tutor-7.avif",
+        },
+        {
+          with: "Sam Ahmed",
+          subject: "Geometry catch-up",
+          day: "Sat, Nov 9",
+          time: "11:00 – 12:00",
+          price: 45,
+          status: "completed",
+          image: "../../assets/images/tutor-8.avif",
+        },
+      ];
+      const ADMIN_USERS = [
+        {
+          name: "Lily Parker",
+          email: "lily@uni.edu",
+          role: "Student",
+          joined: "Oct 12",
+          status: "Active",
+        },
+        {
+          name: "Sarah Johnson",
+          email: "sarah.j@tutorhouse.app",
+          role: "Tutor",
+          joined: "Jan 4",
+          status: "Active",
+        },
+        {
+          name: "Marcus Chen",
+          email: "marcus@tutorhouse.app",
+          role: "Tutor",
+          joined: "Mar 22",
+          status: "Active",
+        },
+        {
+          name: "Noah Garcia",
+          email: "noah.g@uni.edu",
+          role: "Student",
+          joined: "Sep 30",
+          status: "Suspended",
+        },
+        {
+          name: "Aisha Patel",
+          email: "aisha@tutorhouse.app",
+          role: "Tutor",
+          joined: "Feb 18",
+          status: "Active",
+        },
+      ];
+      const ADMIN_CATS = [
+        { name: "Mathematics", tutors: 142, sessions: 4280, status: "Active" },
+        { name: "Sciences", tutors: 98, sessions: 2940, status: "Active" },
+        { name: "Languages", tutors: 76, sessions: 2110, status: "Active" },
+        {
+          name: "Test Preparation",
+          tutors: 54,
+          sessions: 1860,
+          status: "Active",
+        },
+        { name: "Music", tutors: 32, sessions: 740, status: "Active" },
+      ];
+
+      function App() {
+        const [role, setRole] = React.useState("student");
+        const initialRoute = {
+          student: "browse",
+          tutor: "overview",
+          admin: "overview",
+        };
+        const [route, setRoute] = React.useState(initialRoute[role]);
+        const [collapsed, setCollapsed] = React.useState(false);
+        const [toast, setToast] = React.useState(null);
+        const showToast = (m) => {
+          setToast(m);
+          setTimeout(() => setToast(null), 2200);
+        };
+
+        const changeRole = (r) => {
+          setRole(r);
+          setRoute(initialRoute[r]);
+        };
+
+        // Page-level views
+        const StudentBrowse = () => (
+          <>
+            <TopBar
+              title="Browse Tutors"
+              subtitle="500+ vetted experts ready to help."
+              action={
+                <button
+                  className="th-btn th-btn-cta"
+                  onClick={() => showToast("Filters open")}
+                >
+                  + Add filter
+                </button>
+              }
+            />
+            <div className="th-panel">
+              <div className="th-panel-h">
+                <h3>Recommended for you</h3>
+                <a className="th-link">View all →</a>
+              </div>
+              <div className="th-tutor-mini-grid">
+                {TUTORS.map((t, i) => (
+                  <div
+                    className="th-tutor-mini"
+                    key={i}
+                    onClick={() => showToast(`Open ${t.name}`)}
+                  >
+                    <img src={t.image} />
+                    <div className="body">
+                      <div className="name">{t.name}</div>
+                      <div className="meta">
+                        <span>
+                          {t.subject} · ★{t.rating}
+                        </span>
+                        <span className="price">${t.price}/hr</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+
+        const StudentBookings = () => (
+          <>
+            <TopBar
+              title="My Bookings"
+              subtitle="Track upcoming sessions and history."
+            />
+            <div className="th-panel">
+              <div className="th-panel-h">
+                <h3>All bookings</h3>
+                <a className="th-link">Export →</a>
+              </div>
+              <div className="th-panel-body no-pad">
+                {BOOKINGS_STUDENT.map((b, i) => (
+                  <BookingRow
+                    key={i}
+                    booking={b}
+                    onJoin={() => showToast(`Joining session with ${b.with}`)}
+                    onCancel={() =>
+                      showToast(`Cancelled session with ${b.with}`)
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          </>
+        );
+
+        const TutorOverview = () => (
+          <>
+            <TopBar
+              title="My Learning Dashboard back, Marcus 👋"
+              subtitle="You have 3 upcoming sessions this week."
+              action={
+                <button
+                  className="th-btn th-btn-cta"
+                  onClick={() => setRoute("availability")}
+                >
+                  Edit availability
+                </button>
+              }
+            />
+
+            <QuickInsights
+              items={[
+                {
+                  icon: "📅",
+                  label: "Sessions this week",
+                  value: 12,
+                  trend: 8,
+                  tone: "blue",
+                  spark: [4, 6, 5, 8, 7, 9, 12],
+                },
+                {
+                  icon: "👥",
+                  label: "Active students",
+                  value: 38,
+                  trend: 12,
+                  tone: "dark",
+                  spark: [22, 25, 28, 30, 33, 35, 38],
+                },
+                {
+                  icon: "💰",
+                  label: "Earnings this month",
+                  value: 2840,
+                  trend: 18,
+                  tone: "blue",
+                  prefix: "$",
+                  spark: [1200, 1450, 1800, 2100, 2400, 2640, 2840],
+                },
+                {
+                  icon: "⭐",
+                  label: "Avg. rating",
+                  value: 4.92,
+                  trend: 2,
+                  tone: "soft",
+                  spark: [4.7, 4.75, 4.8, 4.85, 4.88, 4.9, 4.92],
+                },
+              ]}
+            />
+
+            <div className="th-charts-grid">
+              <BarChart
+                title="Sessions over the past 8 weeks"
+                sub="Booking momentum and earnings, week over week."
+                data={[
+                  { label: "W1", value: 6 },
+                  { label: "W2", value: 8 },
+                  { label: "W3", value: 7 },
+                  { label: "W4", value: 11 },
+                  { label: "W5", value: 9 },
+                  { label: "W6", value: 13 },
+                  { label: "W7", value: 10 },
+                  { label: "W8", value: 12 },
+                ]}
+                footer="Trending up — you've added 4 sessions/week on average since W1."
+              />
+
+              <DonutChart
+                title="Subjects taught"
+                sub="Where your hours go this month."
+                segments={[
+                  { label: "Calculus", value: 18, color: "#1d4ed8" },
+                  { label: "Algebra", value: 12, color: "#2563eb" },
+                  { label: "SAT prep", value: 8, color: "#0a0a0a" },
+                  { label: "Geometry", value: 4, color: "#a1a1aa" },
+                ]}
+              />
+            </div>
+
+            <ProgressList
+              title="Monthly goals"
+              sub="Track your hours, earnings, response rate, and student retention."
+              items={[
+                {
+                  label: "Hours taught",
+                  value: 42,
+                  max: 60,
+                  accent: "linear-gradient(90deg, #1d4ed8, #2563eb)",
+                },
+                {
+                  label: "Earnings target",
+                  value: 2840,
+                  max: 4000,
+                  accent: "linear-gradient(90deg, #1d4ed8, #2563eb)",
+                },
+                {
+                  label: "Response rate",
+                  value: 94,
+                  max: 100,
+                  accent: "linear-gradient(90deg, #0a0a0a, #18181b)",
+                },
+                {
+                  label: "Student retention",
+                  value: 81,
+                  max: 100,
+                  accent: "linear-gradient(90deg, #1d4ed8, #2563eb)",
+                },
+              ]}
+            />
+
+            <div className="th-panel">
+              <div className="th-panel-h">
+                <h3>Upcoming bookings</h3>
+                <a className="th-link" onClick={() => setRoute("bookings")}>
+                  View all →
+                </a>
+              </div>
+              <div className="th-panel-body no-pad">
+                {BOOKINGS_TUTOR.slice(0, 3).map((b, i) => (
+                  <BookingRow key={i} booking={b} />
+                ))}
+              </div>
+            </div>
+          </>
+        );
+
+        const TutorBookings = () => (
+          <>
+            <TopBar
+              title="Bookings"
+              subtitle="Approve, decline, or join your sessions."
+            />
+            <div className="th-panel">
+              <div className="th-panel-h">
+                <h3>Incoming requests & schedule</h3>
+              </div>
+              <div className="th-panel-body no-pad">
+                {BOOKINGS_TUTOR.map((b, i) => (
+                  <BookingRow key={i} booking={b} />
+                ))}
+              </div>
+            </div>
+          </>
+        );
+
+        const TutorAvailability = () => (
+          <>
+            <TopBar
+              title="Availability"
+              subtitle="Define which weekly slots students can book."
+            />
+            <div className="th-panel">
+              <div className="th-panel-h">
+                <h3>Weekly schedule</h3>
+              </div>
+              <div className="th-panel-body">
+                <AvailabilityEditor />
+              </div>
+            </div>
+          </>
+        );
+
+        const AdminOverview = () => (
+          <>
+            <TopBar
+              title="Admin Overview"
+              subtitle="Platform health at a glance."
+            />
+
+            <QuickInsights
+              items={[
+                {
+                  icon: "👥",
+                  label: "Total students",
+                  value: 15420,
+                  trend: 14,
+                  tone: "blue",
+                  spark: [9000, 10500, 11800, 12500, 13400, 14600, 15420],
+                },
+                {
+                  icon: "🎓",
+                  label: "Active tutors",
+                  value: 512,
+                  trend: 6,
+                  tone: "dark",
+                  spark: [410, 430, 455, 470, 485, 500, 512],
+                },
+                {
+                  icon: "📅",
+                  label: "Sessions completed",
+                  value: 38210,
+                  trend: 9,
+                  tone: "blue",
+                  spark: [22000, 26500, 29000, 31200, 33800, 36200, 38210],
+                },
+                {
+                  icon: "💰",
+                  label: "GMV this quarter",
+                  value: 1200000,
+                  trend: 22,
+                  tone: "soft",
+                  prefix: "$",
+                  spark: [
+                    620000, 720000, 830000, 940000, 1050000, 1130000, 1200000,
+                  ],
+                },
+              ]}
+            />
+
+            <div className="th-charts-grid">
+              <BarChart
+                title="Sessions completed — last 8 months"
+                sub="Monthly throughput across the platform."
+                data={[
+                  { label: "Apr", value: 2840 },
+                  { label: "May", value: 3120 },
+                  { label: "Jun", value: 3450 },
+                  { label: "Jul", value: 3210 },
+                  { label: "Aug", value: 3890 },
+                  { label: "Sep", value: 4360 },
+                  { label: "Oct", value: 4720 },
+                  { label: "Nov", value: 5180 },
+                ]}
+                footer="Q4 is on pace to set a new platform record — projected 15,200 sessions."
+              />
+
+              <DonutChart
+                title="Sessions by category"
+                sub="Where students are booking most."
+                segments={[
+                  { label: "Mathematics", value: 4280, color: "#1d4ed8" },
+                  { label: "Sciences", value: 2940, color: "#2563eb" },
+                  { label: "Languages", value: 2110, color: "#0a0a0a" },
+                  { label: "Test Prep", value: 1860, color: "#52525b" },
+                  { label: "Music", value: 740, color: "#a1a1aa" },
+                ]}
+              />
+            </div>
+
+            <ProgressList
+              title="Quarterly OKRs"
+              sub="Tracking against Q4 platform targets."
+              items={[
+                {
+                  label: "New student signups",
+                  value: 4280,
+                  max: 5000,
+                  accent: "linear-gradient(90deg, #1d4ed8, #2563eb)",
+                },
+                {
+                  label: "GMV target",
+                  value: 1200000,
+                  max: 1500000,
+                  accent: "linear-gradient(90deg, #1d4ed8, #2563eb)",
+                },
+                {
+                  label: "Tutor approval SLA",
+                  value: 87,
+                  max: 100,
+                  accent: "linear-gradient(90deg, #0a0a0a, #18181b)",
+                },
+                {
+                  label: "CSAT score",
+                  value: 92,
+                  max: 100,
+                  accent: "linear-gradient(90deg, #1d4ed8, #2563eb)",
+                },
+              ]}
+            />
+
+            <div className="th-panel">
+              <div className="th-panel-h">
+                <h3>Recent users</h3>
+                <a className="th-link" onClick={() => setRoute("users")}>
+                  Manage →
+                </a>
+              </div>
+              <div className="th-panel-body no-pad">
+                <DataTable
+                  columns={[
+                    {
+                      key: "user",
+                      label: "User",
+                      render: (r) => (
+                        <div className="th-table-cell-user">
+                          <div className="av">{r.name[0]}</div>
+                          <div>
+                            <div className="name">{r.name}</div>
+                            <div className="email">{r.email}</div>
+                          </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      key: "role",
+                      label: "Role",
+                      render: (r) => (
+                        <span className="th-pill outline">{r.role}</span>
+                      ),
+                    },
+                    { key: "joined", label: "Joined" },
+                    {
+                      key: "status",
+                      label: "Status",
+                      render: (r) => (
+                        <span
+                          className={
+                            "th-pill " +
+                            (r.status === "Active" ? "success" : "danger")
+                          }
+                        >
+                          {r.status}
+                        </span>
+                      ),
+                    },
+                  ]}
+                  rows={ADMIN_USERS.slice(0, 4)}
+                  actions={[
+                    {
+                      label: "View",
+                      onClick: (r) => showToast(`Viewing ${r.name}`),
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </>
+        );
+
+        const AdminUsers = () => (
+          <>
+            <TopBar
+              title="Users"
+              subtitle="All students, tutors, and staff."
+              action={
+                <button
+                  className="th-btn th-btn-cta"
+                  onClick={() => showToast("Invite link copied")}
+                >
+                  + Invite
+                </button>
+              }
+            />
+            <div className="th-panel">
+              <div className="th-panel-body no-pad">
+                <DataTable
+                  columns={[
+                    {
+                      key: "user",
+                      label: "User",
+                      render: (r) => (
+                        <div className="th-table-cell-user">
+                          <div className="av">{r.name[0]}</div>
+                          <div>
+                            <div className="name">{r.name}</div>
+                            <div className="email">{r.email}</div>
+                          </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      key: "role",
+                      label: "Role",
+                      render: (r) => (
+                        <span className="th-pill outline">{r.role}</span>
+                      ),
+                    },
+                    { key: "joined", label: "Joined" },
+                    {
+                      key: "status",
+                      label: "Status",
+                      render: (r) => (
+                        <span
+                          className={
+                            "th-pill " +
+                            (r.status === "Active" ? "success" : "danger")
+                          }
+                        >
+                          {r.status}
+                        </span>
+                      ),
+                    },
+                  ]}
+                  rows={ADMIN_USERS}
+                  actions={[
+                    {
+                      label: "Edit",
+                      onClick: (r) => showToast(`Edit ${r.name}`),
+                    },
+                    {
+                      label: "Suspend",
+                      variant: "danger",
+                      onClick: (r) => showToast(`Suspended ${r.name}`),
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+          </>
+        );
+
+        const AdminCategories = () => (
+          <>
+            <TopBar
+              title="Categories"
+              subtitle="Subjects students can browse and book."
+              action={
+                <button
+                  className="th-btn th-btn-cta"
+                  onClick={() => showToast("New category")}
+                >
+                  + New category
+                </button>
+              }
+            />
+            <div className="th-panel">
+              <div className="th-panel-body no-pad">
+                <DataTable
+                  columns={[
+                    {
+                      key: "name",
+                      label: "Name",
+                      render: (r) => (
+                        <span style={{ fontWeight: 600, color: "#18181b" }}>
+                          {r.name}
+                        </span>
+                      ),
+                    },
+                    { key: "tutors", label: "Tutors" },
+                    { key: "sessions", label: "Sessions" },
+                    {
+                      key: "status",
+                      label: "Status",
+                      render: (r) => (
+                        <span className="th-pill success">{r.status}</span>
+                      ),
+                    },
+                  ]}
+                  rows={ADMIN_CATS}
+                  actions={[
+                    { label: "Edit" },
+                    { label: "Archive", variant: "danger" },
+                  ]}
+                />
+              </div>
+            </div>
+          </>
+        );
+
+        const renderPage = () => {
+          if (role === "student" && route === "browse")
+            return <StudentBrowse />;
+          if (role === "student" && route === "bookings")
+            return <StudentBookings />;
+          if (role === "student" && route === "messages")
+            return <ComingSoon label="Messages" />;
+          if (role === "student" && route === "profile")
+            return <ComingSoon label="Profile" />;
+          if (role === "tutor" && route === "overview")
+            return <TutorOverview />;
+          if (role === "tutor" && route === "bookings")
+            return <TutorBookings />;
+          if (role === "tutor" && route === "availability")
+            return <TutorAvailability />;
+          if (role === "tutor" && route === "earnings")
+            return <ComingSoon label="Earnings" />;
+          if (role === "admin" && route === "overview")
+            return <AdminOverview />;
+          if (role === "admin" && route === "users") return <AdminUsers />;
+          if (role === "admin" && route === "tutors") return <AdminUsers />;
+          if (role === "admin" && route === "categories")
+            return <AdminCategories />;
+          if (role === "admin" && route === "bookings") return <AdminUsers />;
+          return null;
+        };
+
+        return (
+          <div className={"th-app" + (collapsed ? " collapsed" : "")}>
+            <DashSidebar
+              role={role}
+              onChangeRole={changeRole}
+              route={route}
+              onNavigate={setRoute}
+              collapsed={collapsed}
+              onToggle={() => setCollapsed((c) => !c)}
+            />
+            <main className="th-main">{renderPage()}</main>
+            {toast && <div className="th-toast">{toast}</div>}
+          </div>
+        );
+      }
+
+      function ComingSoon({ label }) {
+        return (
+          <>
+            <TopBar
+              title={label}
+              subtitle="This screen is part of the kit but not yet wired in this prototype."
+            />
+            <div className="th-panel">
+              <div
+                className="th-panel-body"
+                style={{ padding: 60, textAlign: "center", color: "#a1a1aa" }}
+              >
+                <div style={{ fontSize: 48, marginBottom: 12 }}>🚧</div>
+                <div style={{ fontWeight: 600, color: "#52525b" }}>
+                  {label} view stub
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

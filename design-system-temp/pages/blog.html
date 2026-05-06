@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog · Tutor House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page.css">
+<style>
+  /* Featured row */
+  .featured-row {
+    padding: 60px 32px 40px;
+    background: var(--bg);
+  }
+  .featured-inner { max-width: 1200px; margin: 0 auto; }
+  .featured {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  .featured-img {
+    position: relative;
+    overflow: hidden;
+    min-height: 460px;
+  }
+  .featured-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .featured:hover .featured-img img { transform: scale(1.04); }
+  .featured-tag {
+    position: absolute; top: 24px; left: 24px;
+    background: var(--blue);
+    color: var(--white);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .featured-body {
+    padding: 56px 48px;
+    display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .featured-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 18px;
+  }
+  .featured-body h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.2vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    margin-bottom: 18px;
+    text-wrap: balance;
+  }
+  .featured-body h2 a:hover { color: var(--blue); }
+  .featured-body p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    text-wrap: pretty;
+  }
+  .author-row {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    object-fit: cover;
+    background: #eee;
+  }
+  .author-name { font-size: 14.5px; font-weight: 500; }
+  .author-info { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+
+  /* Filters */
+  .filters {
+    padding: 50px 32px 30px;
+    background: var(--bg);
+  }
+  .filters-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 20px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+  }
+  .filters-h {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+  }
+  .chip:hover { color: var(--blue); border-color: rgba(29,78,216,0.4); }
+  .chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+  /* Grid */
+  .blog-grid-section {
+    padding: 40px 32px 100px;
+    background: var(--bg);
+  }
+  .blog-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 24px;
+  }
+  .post {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.45s ease, border-color 0.45s ease;
+    display: flex; flex-direction: column;
+  }
+  .post:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -16px rgba(10,10,10,0.12);
+    border-color: rgba(29,78,216,0.25);
+  }
+  .post-img {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+    background: #eee;
+  }
+  .post-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .post:hover .post-img img { transform: scale(1.06); }
+  .post-tag {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .post-body {
+    padding: 26px 26px 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    flex: 1;
+  }
+  .post-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .post h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+  .post h3 a:hover { color: var(--blue); }
+  .post-excerpt {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    text-wrap: pretty;
+  }
+  .post-foot {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .post-foot img { width: 28px; height: 28px; border-radius: 999px; object-fit: cover; }
+
+  /* Newsletter */
+  .nl {
+    padding: 80px 32px;
+    background: var(--white);
+    border-top: 1px solid var(--line);
+  }
+  .nl-inner {
+    max-width: 1000px; margin: 0 auto;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 24px;
+    padding: 56px 48px;
+    display: grid; grid-template-columns: 1.3fr 1fr;
+    gap: 40px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .nl-inner::before {
+    content: "";
+    position: absolute; right: -120px; top: -120px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle at center, rgba(29,78,216,0.45), transparent 65%);
+    border-radius: 50%;
+  }
+  .nl h3 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-weight: 400;
+    margin-bottom: 12px;
+    position: relative;
+    text-wrap: balance;
+  }
+  .nl h3 em { color: var(--blue); }
+  .nl p { color: rgba(255,255,255,0.65); font-size: 15px; line-height: 1.55; position: relative; }
+  .nl-form {
+    display: flex; gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px;
+    border-radius: 999px;
+    position: relative;
+  }
+  .nl-form input {
+    flex: 1; min-width: 0;
+    background: transparent; border: 0; outline: none;
+    color: var(--white);
+    padding: 10px 16px;
+    font-size: 14.5px;
+  }
+  .nl-form input::placeholder { color: rgba(255,255,255,0.4); }
+  .nl-form button {
+    background: var(--blue);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .nl-form button:hover { background: #2563eb; transform: translateX(2px); }
+
+  @media (max-width: 900px) {
+    .featured-row { padding: 40px 20px 20px; }
+    .featured { grid-template-columns: 1fr; }
+    .featured-img { min-height: 280px; }
+    .featured-body { padding: 32px 24px; }
+    .filters { padding: 40px 20px 20px; }
+    .blog-grid-section { padding: 24px 20px 60px; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .nl { padding: 40px 20px; }
+    .nl-inner { padding: 32px 24px; grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="../Landing Page.html" class="nav-brand"><span class="nav-brand-mark">T</span><span>tutorhouse</span></a>
+  <ul class="nav-links">
+    <li><a class="nav-link" href="../Landing Page.html#tutors">Tutors</a></li>
+    <li><a class="nav-link" href="about.html">About us</a></li>
+    <li><a class="nav-link active" href="blog.html">Blog</a></li>
+    <li><a class="nav-link" href="contact.html">Contact us</a></li>
+    <li class="nav-has-menu">
+      <button class="nav-link nav-link-menu">More <span class="nav-caret">▾</span></button>
+      <div class="nav-menu">
+        <a href="../Landing Page.html#mission">Our mission</a>
+        <a href="../Landing Page.html#developer">Developer</a>
+        <a href="../Landing Page.html#community">Community</a>
+        <a href="../Landing Page.html#faq">FAQ</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy policy</a>
+      </div>
+    </li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get started <svg class="nav-cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="crumbs"><a href="../Landing Page.html">Home</a><span class="sep">/</span><span>Blog</span></div>
+    <h1>Notes from the <em>study room.</em></h1>
+    <p class="lede">Long-form essays, opinionated guides, and the occasional data dump from our researchers and tutors. New writing every other Wednesday.</p>
+  </div>
+</section>
+
+<!-- Featured -->
+<section class="featured-row">
+  <div class="featured-inner">
+    <article class="featured">
+      <a href="#" class="featured-img">
+        <span class="featured-tag">Featured</span>
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1400&q=80" alt="">
+      </a>
+      <div class="featured-body">
+        <div class="featured-meta">May 2 · Research · 8 min read</div>
+        <h2><a href="#">The science of learning: why one-on-one tutoring beats classrooms 2× over.</a></h2>
+        <p>Bloom's 2-sigma problem, revisited. We dig into the data behind why personalized instruction lifts outcomes — and why it's finally getting affordable enough to matter for everyone.</p>
+        <div class="author-row">
+          <img class="author-avatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80" alt="">
+          <div>
+            <div class="author-name">Maya Rodríguez</div>
+            <div class="author-info">Co-founder · CEO</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Filters -->
+<section class="filters">
+  <div class="filters-inner">
+    <div class="filters-h">Browse by topic</div>
+    <div class="chips">
+      <button class="chip active">All articles</button>
+      <button class="chip">Research</button>
+      <button class="chip">Guides</button>
+      <button class="chip">For tutors</button>
+      <button class="chip">Product</button>
+      <button class="chip">Stories</button>
+    </div>
+  </div>
+</section>
+
+<!-- Grid -->
+<section class="blog-grid-section">
+  <div class="blog-grid">
+    <article class="post">
+      <a class="post-img" href="#"><span class="post-tag">Guides</span><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=900&q=80" alt=""></a>
+      <div class="post-body">
+        <div class="post-meta">Apr 28 · 5 min read</div>
+        <h3><a href="#">How to pick an SAT tutor that won't waste your weekends.</a></h3>
+        <p class="post-excerpt">A short, opinionated checklist for parents and high schoolers — covering credentials, mock-test fluency, and three red flags to walk away from.</p>
+        <div class="post-foot"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80" alt=""><span>Aisha Bello</span></div>
+      </div>
+    </article>
+
+    <article class="post">
+      <a class="post-img" href="#"><span class="post-tag">Stories</span><img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=900&q=80" alt=""></a>
+      <div class="post-body">
+        <div class="post-meta">Apr 22 · 4 min read</div>
+        <h3><a href="#">From classroom to camera: 6 tutors share their switch.</a></h3>
+        <p class="post-excerpt">Real income numbers, real time savings, real trade-offs. We sat down with six tutors who left full-time teaching for the platform.</p>
+        <div class="post-foot"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt=""><span>Jordan Park</span></div>
+      </div>
+    </article>
+
+    <article class="post">
+      <a class="post-img" href="#"><span class="post-tag">Research</span><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=900&q=80" alt=""></a>
+      <div class="post-body">
+        <div class="post-meta">Apr 15 · 11 min read</div>
+        <h3><a href="#">The grade-lift gap: what 12,000 sessions told us about pacing.</a></h3>
+        <p class="post-excerpt">An honest dive into our outcome data — including the awkward finding that more-frequent short sessions beat the popular weekly two-hour block.</p>
+        <div class="post-foot"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80" alt=""><span>Maya Rodríguez</span></div>
+      </div>
+    </article>
+
+    <article class="post">
+      <a class="post-img" href="#"><span class="post-tag">Product</span><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80" alt=""></a>
+      <div class="post-body">
+        <div class="post-meta">Apr 9 · 6 min read</div>
+        <h3><a href="#">What's new in v2.4: a smarter match engine, calmer notifications.</a></h3>
+        <p class="post-excerpt">A lighter changelog, with the highlights of our latest release: matching now reads goal context, and notifications got a serious diet.</p>
+        <div class="post-foot"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt=""><span>Tahmid Rahman</span></div>
+      </div>
+    </article>
+
+    <article class="post">
+      <a class="post-img" href="#"><span class="post-tag">For tutors</span><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&q=80" alt=""></a>
+      <div class="post-body">
+        <div class="post-meta">Apr 3 · 7 min read</div>
+        <h3><a href="#">Pricing your sessions: a small guide to charging what you're worth.</a></h3>
+        <p class="post-excerpt">Most new tutors underprice. Here's a framework for setting an honest rate, when to raise it, and how to talk about money with your students.</p>
+        <div class="post-foot"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80" alt=""><span>Aisha Bello</span></div>
+      </div>
+    </article>
+
+    <article class="post">
+      <a class="post-img" href="#"><span class="post-tag">Guides</span><img src="https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=900&q=80" alt=""></a>
+      <div class="post-body">
+        <div class="post-meta">Mar 27 · 5 min read</div>
+        <h3><a href="#">Studying for finals without losing your weekends.</a></h3>
+        <p class="post-excerpt">A study schedule that respects sleep, social time, and the diminishing returns of marathon sessions. Built from hundreds of student interviews.</p>
+        <div class="post-foot"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80" alt=""><span>Maya Rodríguez</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="nl">
+  <div class="nl-inner">
+    <div>
+      <h3>Get our best <em>writing</em> — every other Wednesday.</h3>
+      <p>Long-form essays, no fluff, no marketing emails. 14,200+ readers including teachers, parents, and ed-tech folks.</p>
+    </div>
+    <form class="nl-form" onsubmit="event.preventDefault(); this.querySelector('input').value=''; this.querySelector('button').textContent='Subscribed ✓';">
+      <input type="email" placeholder="you@example.com" required>
+      <button type="submit">Subscribe →</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand-block">
+      <div class="footer-brand"><div class="footer-brand-mark">th</div><div>tutorhouse</div></div>
+      <p class="footer-tag">A better way to find a tutor that gets you. Built by educators in Brooklyn, Lagos, and Dhaka.</p>
+    </div>
+    <div class="footer-col"><h5>Product</h5><ul><li><a href="../Landing Page.html#tutors">Tutors</a></li><li><a href="#">Subjects</a></li><li><a href="#">Pricing</a></li><li><a href="#">Become a tutor</a></li></ul></div>
+    <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About us</a></li><li><a href="../Landing Page.html#mission">Our mission</a></li><li><a href="blog.html">Blog</a></li><li><a href="#">Careers</a></li></ul></div>
+    <div class="footer-col"><h5>Resources</h5><ul><li><a href="../Landing Page.html#developer">Developer</a></li><li><a href="../Landing Page.html#community">Community</a></li><li><a href="../Landing Page.html#faq">FAQ</a></li><li><a href="contact.html">Contact us</a></li></ul></div>
+    <div class="footer-col"><h5>Legal</h5><ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html#cookies">Cookies</a></li><li><a href="terms.html#use">Acceptable use</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <div>© 2026 Tutor House Inc. — Made with care, in three time zones.</div>
+    <div class="footer-bot-links"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="contact.html">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+  }));
+</script>
+</body>
+</html>

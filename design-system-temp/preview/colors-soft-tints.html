@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css"><style>
+body{margin:0;padding:0;background:#fff;font-family:var(--font-sans)}
+.hero{height:160px;position:relative;overflow:hidden;background:linear-gradient(to bottom right,#f8fafc,#faf5ff,#eff6ff);border-radius:0;margin:0}
+.blob{position:absolute;width:160px;height:160px;border-radius:50%;filter:blur(40px);opacity:.4;mix-blend-mode:multiply}
+.b1{background:#d8b4fe;top:-30px;left:30px}
+.b2{background:#fde047;top:-20px;right:60px}
+.b3{background:#f9a8d4;bottom:-40px;left:120px}
+.b4{background:#93c5fd;bottom:-10px;right:20px}
+.label{position:absolute;left:24px;top:18px;font:600 11px var(--font-sans);letter-spacing:.04em;text-transform:uppercase;color:#6b7280}
+.cap{position:absolute;left:24px;bottom:18px;font:500 12px var(--font-mono);color:#374151;background:rgba(255,255,255,.7);padding:4px 8px;border-radius:6px;backdrop-filter:blur(6px)}
+</style></head><body>
+<div class="hero">
+  <div class="label">Hero soft-tint backdrop + animated blobs</div>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <div class="cap">slate-50 → purple-50 → blue-50 + opacity-30 blur-xl mix-blend-multiply</div>
+</div>
+</body></html>
